@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+:root {
+  --surface: #020617;
+  --ink-strong: #ffffff;
+  --ink: #cbd5e1;
+  --sub: #94a3b8;
+  --muted: #64748b;
+  --faint: #475569;
+  --ghost: #334155;
+  --line: #1e293b;
+  --line-soft: rgba(30, 41, 59, 0.7);
+  --line-bright: #475569;
+  --hover-surface: #f1f5f9;
+  --sel-bg: #cbd5e1;
+  --sel-text: #020617;
+  --accent-sky: #38bdf8;
+  --accent-violet: #a78bfa;
+  --accent-amber: #fbbf24;
+
+  color-scheme: dark;
+}
+
+html.light {
+  --surface: #f8fafc;
+  --ink-strong: #0f172a;
+  --ink: #334155;
+  --sub: #475569;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --ghost: #cbd5e1;
+  --line: #e2e8f0;
+  --line-soft: rgba(226, 232, 240, 0.7);
+  --line-bright: #94a3b8;
+  --hover-surface: #0f172a;
+  --sel-bg: #334155;
+  --sel-text: #f8fafc;
+  --accent-sky: #0284c7;
+  --accent-violet: #7c3aed;
+  --accent-amber: #d97706;
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-white: var(--ink-strong);
+  --color-slate-100: var(--hover-surface);
+  --color-slate-300: var(--ink);
+  --color-slate-400: var(--sub);
+  --color-slate-500: var(--muted);
+  --color-slate-600: var(--faint);
+  --color-slate-700: var(--ghost);
+  --color-slate-800: var(--line);
+  --color-slate-950: var(--surface);
+  --color-sky-400: var(--accent-sky);
+  --color-violet-400: var(--accent-violet);
+  --color-amber-400: var(--accent-amber);
+}
+
+html,
+body {
+  background-color: var(--surface);
+}
+
+html {
+  scroll-behavior: smooth;
+}

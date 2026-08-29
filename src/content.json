@@ -1,0 +1,28 @@
+{
+  "notes": [
+    {
+      "no": "001",
+      "date": "2026-08-20",
+      "tag": "LAB",
+      "title": "The Sleep Reset Protocol",
+      "desc": "A 7-day field experiment testing morning sunlight, habit-stacking, and early walks to hard-reset a broken sleep schedule.",
+      "href": "https://kalenmichael.substack.com/p/can-you-fix-your-broken-sleep-in"
+    }
+  ],
+  "resources": [
+    {
+      "no": "R-01",
+      "tag": "DOWNLOAD",
+      "title": "The Weekly Retro",
+      "desc": "Printable 7-day tracker for morning sunlight, habit-stacking, and early walks.",
+      "href": "https://kalenmichael.com/resources/the-weekly-retro.pdf"
+    },
+    {
+      "no": "R-02",
+      "tag": "TOOLKIT",
+      "title": "Operations Log",
+      "desc": "The logging and review loop used to run every Mindset Lab experiment.",
+      "href": "https://log.kalenmichale.com"
+    }
+  ]
+}
