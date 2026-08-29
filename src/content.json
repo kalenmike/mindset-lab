@@ -14,15 +14,15 @@
       "no": "R-01",
       "tag": "DOWNLOAD",
       "title": "The Weekly Retro",
-      "desc": "Printable 7-day tracker for morning sunlight, habit-stacking, and early walks.",
-      "href": "https://kalenmichael.com/resources/the-weekly-retro.pdf"
+      "desc": "A 5-page system for building, tracking and iterating your routine.",
+      "href": "https://kalenmichael.gumroad.com/l/weekly-retro"
     },
     {
       "no": "R-02",
       "tag": "TOOLKIT",
       "title": "Operations Log",
-      "desc": "The logging and review loop used to run every Mindset Lab experiment.",
-      "href": "https://log.kalenmichale.com"
+      "desc": "A local execution dashboard for running, tracking, and iterating your weekly routines.",
+      "href": "https://log.kalenmichael.com"
     }
   ]
 }
