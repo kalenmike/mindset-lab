@@ -163,33 +163,42 @@ const RESOURCE_TAGS: Record<ResourceTagId, ResourceTag> = {
 }
 
 function App() {
-    const [theme, setTheme] = useState<Theme>(getInitialTheme)
+    const [theme, setTheme] = useState<Theme>('dark')
+    const [manualChoice, setManualChoice] = useState(false)
 
     useEffect(() => {
-        document.documentElement.classList.toggle('light', theme === 'light')
-        try {
-            localStorage.setItem(THEME_KEY, theme)
-        } catch {
-            // storage unavailable — theme still applies for the session
-        }
-    }, [theme])
+        if (manualChoice) return
+        setTheme(getInitialTheme())
+    }, [manualChoice])
 
     useEffect(() => {
-        try {
-            if (localStorage.getItem(THEME_KEY)) return
-        } catch {
-            return
-        }
+        if (manualChoice) return
         const mq = window.matchMedia('(prefers-color-scheme: light)')
         const onSystemChange = (event: MediaQueryListEvent) =>
             setTheme(event.matches ? 'light' : 'dark')
         mq.addEventListener('change', onSystemChange)
         return () => mq.removeEventListener('change', onSystemChange)
-    }, [])
+    }, [manualChoice])
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('light', theme === 'light')
+        if (manualChoice) {
+            try {
+                localStorage.setItem(THEME_KEY, theme)
+            } catch {
+                // storage unavailable — theme still applies for the session
+            }
+        }
+    }, [theme, manualChoice])
+
+    const toggleTheme = () => {
+        setManualChoice(true)
+        setTheme(theme === 'dark' ? 'light' : 'dark')
+    }
 
     return (
         <main className="min-h-svh bg-slate-950 font-mono text-slate-300 selection:bg-slate-300 selection:text-slate-950">
-            <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
             <div className="mx-auto flex min-h-svh w-full max-w-3xl flex-col px-6 py-12 sm:px-8">
                 {/* Header */}
                 <header className="border-b border-dashed border-slate-800 pb-10">
