@@ -201,7 +201,7 @@ function App() {
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
             <div className="mx-auto flex min-h-svh w-full max-w-3xl flex-col px-6 py-12 sm:px-8">
                 {/* Header */}
-                <header className="border-b border-dashed border-slate-800 pb-10">
+                <header className="border-b border-dashed border-slate-800">
                     <nav aria-label="Section" className="mb-8 flex flex-wrap items-center gap-1 pr-12 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                         {MENU.map((item, index) => (
                             <Fragment key={item.href}>
@@ -212,6 +212,13 @@ function App() {
                             </Fragment>
                         ))}
                     </nav>
+
+                </header>
+
+                <section className="border-b border-dashed border-slate-800 py-10">
+                    <p className="mb-6 text-xs text-slate-600">
+                        welcome to the experiment
+                    </p>
                     <h1 className="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
                         MINDSET LAB <span className="font-normal text-slate-600">//</span> KALEN MICHAEL
                     </h1>
@@ -220,16 +227,10 @@ function App() {
                         discipline. Real frameworks, zero wishy-washy fluff.
                     </p>
 
-                </header>
-
-                {/* Substack outpost */}
-                <section className="border-b border-dashed border-slate-800 py-10">
-                    <p className="mb-6 text-xs text-slate-600">
-                        Welcome to the experiment.
-                    </p>
+                    {/* Substack outpost */}
                     <a
                         href="https://kalenmichael.substack.com"
-                        className="group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
+                        className="mt-10 group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
                     >
                         <span className="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
                             →
@@ -410,7 +411,7 @@ function App() {
 
                 {/* Footer */}
                 <footer className="mt-auto border-t border-dashed border-slate-800 pt-6 text-xs text-slate-600">
-                    mindset-lab // kalen michael — rebuilt daily.
+                    mindset lab // kalen michael — rebuilt daily.
                 </footer>
             </div>
         </main>
