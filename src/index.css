@@ -3,10 +3,18 @@
 
 @theme {
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --animate-blink: blink 1s step-end infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0.7;
+    }
+  }
 }
 
 :root {
   --surface: #020617;
+  --surface-raise: #0f172a;
   --ink-strong: #ffffff;
   --ink: #cbd5e1;
   --sub: #94a3b8;
@@ -22,12 +30,15 @@
   --accent-sky: #38bdf8;
   --accent-violet: #a78bfa;
   --accent-amber: #fbbf24;
+  --status-live: #ef4444;
+  --status-complete: #4ade80;
 
   color-scheme: dark;
 }
 
 html.light {
   --surface: #f8fafc;
+  --surface-raise: #eef2f7;
   --ink-strong: #0f172a;
   --ink: #334155;
   --sub: #475569;
@@ -43,6 +54,8 @@ html.light {
   --accent-sky: #0284c7;
   --accent-violet: #7c3aed;
   --accent-amber: #d97706;
+  --status-live: #dc2626;
+  --status-complete: #16a34a;
 
   color-scheme: light;
 }
@@ -56,10 +69,13 @@ html.light {
   --color-slate-600: var(--faint);
   --color-slate-700: var(--ghost);
   --color-slate-800: var(--line);
+  --color-slate-900: var(--surface-raise);
   --color-slate-950: var(--surface);
   --color-sky-400: var(--accent-sky);
   --color-violet-400: var(--accent-violet);
   --color-amber-400: var(--accent-amber);
+  --color-red-400: var(--status-live);
+  --color-green-400: var(--status-complete);
 }
 
 html,

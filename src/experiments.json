@@ -1,0 +1,261 @@
+{
+  "experiments": [
+    {
+      "slug": "7-day-circadian-reset",
+      "title": "The 7-Day Circadian Reset",
+      "subtitle": "",
+      "tagline": "Hard-resetting a broken sleep schedule with morning sunlight, walking, and strict light hygiene.",
+      "status": "COMPLETE",
+      "start": "2026-09-01",
+      "duration": "7 days",
+      "tag": "LAB",
+      "description": "Seven days of morning sunlight immediately after waking, and a daily walking baseline. The goal: recalibrate the sleep clock without supplements or apps.",
+      "protocol": [
+        "Wake up with the alarm. No snooze.",
+        "Immediately leave the house for a walk.",
+        "Minimum of 15-minutes of outdoor sunlight."
+      ],
+      "href": "https://kalenmichael.substack.com/p/can-you-fix-your-broken-sleep-in",
+      "calendar": {
+        "start": "2026-07-30",
+        "end": "2026-08-05",
+        "days": {
+          "2026-07-30": {
+            "label": "1",
+            "title": "Day 1 - The Catalyst",
+            "note": "Alarm didn't sound, up at 07:29 by pure luck.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DbqKfZcMcGA/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-07-31": {
+            "label": "2",
+            "title": "Day 2 - Resistance is here",
+            "note": "Woke up at 06:51.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Dbuj_qCMl7Z/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-01": {
+            "label": "3",
+            "title": "Day 3 - What it's really like",
+            "note": "Woke at 06:50.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DbxFJoMshFD/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-02": {
+            "label": "4",
+            "title": "Day 4 - How it's going",
+            "note": "Alarm raised me at 06:50.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Db0HHE5MvVu/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-03": {
+            "label": "5",
+            "title": "Day 5 - Going backwards",
+            "note": "Forced myself up at 06:50.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Db3K5VJsf2D/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-04": {
+            "label": "6",
+            "title": "Day 6 - I see a light",
+            "note": " Out of bed at 06:11.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Db5S7hDs3xV/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-05": {
+            "label": "7",
+            "title": "Day 7 — Reflecting on it all",
+            "note": "Beat my alarm and woke at 05:31.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Db7pi2EMPT-/",
+            "linkLabel": "watch the reel"
+          }
+        }
+      },
+      "featured": true
+    },
+    {
+      "slug": "30-day-public-speaking-challenge-higherupwellness",
+      "title": "The 30-Day Public Speaking & Content Challenge",
+      "subtitle": "",
+      "tagline": "Thirty days of output: recording a 60 second video every day for release to Instagram. #higherupwellnesschallenge",
+      "status": "LIVE",
+      "start": "2026-09-05",
+      "duration": "30 days",
+      "tag": "LAB",
+      "description": "Volume over polish. One 60-second video per day for 30 days. Stacking reps until the reps stop being scary.",
+      "protocol": [
+        "Record one 60-second talk on a daily.",
+        "Schedule the video for posting to Instagram, no matter how cringe.",
+        "No edits, no cuts.",
+        "Review yesterday's output and pick one improvement.",
+        "Log reps, reach, and energy each evening."
+      ],
+      "href": "https://kalenmichael.substack.com",
+      "calendar": {
+        "start": "2026-08-13",
+        "end": "2026-09-11",
+        "days": {
+          "2026-08-13": {
+            "label": "1",
+            "title": "Day 1 — Lets do this",
+            "note": "Introduction to the experiment.",
+            "href": "https://www.instagram.com/kalenmichael/reel/Db-ibr2MuaO/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-14": {
+            "label": "2",
+            "title": "Day 2 - Growth illusion",
+            "note": "Touching on the short-comings of comparison in social media.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcAwukPM9V5/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-15": {
+            "label": "3",
+            "title": "Day 3 - Reality mindset",
+            "note": "It's our mind that shapes our reality.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcDvYwgMNfA/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-16": {
+            "label": "4",
+            "title": "Day 4 - Movement saves",
+            "note": "How movement got me out of my depression",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcGfspxM-HY/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-17": {
+            "label": "5",
+            "title": "Day 5 - The reaction arc",
+            "note": "Understanding how extremes create more extremes.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcKDrbGsPvt/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-18": {
+            "label": "6",
+            "title": "Day 6 - Show up anyway",
+            "note": "Clocking in after a long day. Happy birthday to me.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcMpEzLMhLJ/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-19": {
+            "label": "7",
+            "title": "Day 7 - Thinking frameworks",
+            "note": "How the smartest people choose to think.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcPA6zcstub/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-20": {
+            "label": "8",
+            "title": "Day 8 - Changing beliefs",
+            "note": "The top 3 beliefs that I chose to abandon because they did not serve me.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcRdzIaMqJY/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-21": {
+            "label": "9",
+            "title": "Day 9 - How I beat anxiety",
+            "note": "Figuring out that anxiety may just be a check in, not a warning.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DckwD3sMmHN/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-22": {
+            "label": "10",
+            "title": "Day 10 - The doom scroll cycle",
+            "note": "Freestyling a late one after almost forgetting to record.",
+            "href": "https://www.instagram.com/kalenmichael/reel/DcrkNo5se0L/",
+            "linkLabel": "watch the reel"
+          },
+          "2026-08-23": {
+            "label": "11",
+            "title": "Day 11",
+            "releaseDate": "2026-09-02"
+          },
+          "2026-08-24": {
+            "label": "12",
+            "title": "Day 12",
+            "releaseDate": "2026-09-05"
+          },
+          "2026-08-25": {
+            "label": "13",
+            "title": "Day 13",
+            "releaseDate": "2026-09-08"
+          },
+          "2026-08-26": {
+            "label": "14",
+            "title": "Day 14",
+            "releaseDate": "2026-09-11"
+          },
+          "2026-08-27": {
+            "label": "15",
+            "title": "Day 15",
+            "note": "",
+            "releaseDate": "2026-09-14"
+          },
+          "2026-08-28": {
+            "label": "16",
+            "title": "Day 16",
+            "releaseDate": "2026-09-17"
+          },
+          "2026-08-29": {
+            "label": "17",
+            "title": "Day 17",
+            "releaseDate": "2026-09-20"
+          },
+          "2026-08-30": {
+            "label": "18",
+            "title": "Day 18",
+            "releaseDate": "2026-09-23"
+          }
+        }
+      },
+      "featured": true
+    },
+    {
+      "slug": "social-media-growth-building-in-public",
+      "title": "The Social Media Growth Experiment",
+      "subtitle": "",
+      "tagline": "Growing an audience the honest way: raw numbers, real posts, no bought reach.",
+      "status": "HIDDEN",
+      "start": "2026-07-15",
+      "duration": "~",
+      "tag": "LAB",
+      "description": "Documenting growth across platforms with zero paid promotion. Posting daily, tracking organic reach, and publishing the ugly metrics every week.",
+      "protocol": [
+        "Post daily on Instagram.",
+        "Publish a weekly metrics breakdown in public.",
+        "Engage 20 minutes per day in relevant communities.",
+        "Log followers, reach, and conversion weekly."
+      ],
+      "href": "https://kalenmichael.substack.com",
+      "featured": false
+    },
+    {
+      "slug": "122-day-sexual-energy-retention",
+      "title": "The Celibacy Experiment",
+      "subtitle": "",
+      "tagline": "122 days celibate to finish 2026. No outsourcing my calm. I want to see what I'm actually using pleasure to avoid.",
+      "status": "LIVE",
+      "start": "2026-06-01",
+      "duration": "122 days",
+      "tag": "LAB",
+      "description": "A 122-day experiment to finish 2026. No outsourcing my calm to finish the year. Tracking sleep, training, focus, and what I'm actually avoiding when urges hit",
+      "protocol": [
+        "No first person or third person pleasure. ",
+        "Train 3x per week with zero skipped sessions.",
+        "Monthly audit: what changed physically and mentally?"
+      ],
+      "href": "https://kalenmichael.substack.com",
+      "calendar": {
+        "start": "2026-09-01",
+        "end": "2026-12-31",
+        "days": {
+          "2026-09-01": {
+            "label": "1",
+            "title": "Day 1"
+          }
+        }
+      },
+      "featured": false
+    }
+  ]
+}
