@@ -1,0 +1,14 @@
+---
+interface Props {
+    value: string
+}
+
+const { value } = Astro.props
+
+const STATUS_STYLES: Record<string, string> = {
+    LIVE: 'text-red-400 animate-blink',
+    COMPLETE: 'text-green-400',
+}
+---
+
+<span class={`text-xs ${STATUS_STYLES[value] ?? 'text-slate-500'}`}>{value}</span>

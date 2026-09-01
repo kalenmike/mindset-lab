@@ -86,3 +86,15 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+#theme-toggle .icon-light {
+  display: none;
+}
+
+html.light #theme-toggle .icon-light {
+  display: block;
+}
+
+html.light #theme-toggle .icon-dark {
+  display: none;
+}

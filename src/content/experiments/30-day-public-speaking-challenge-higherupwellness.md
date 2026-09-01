@@ -1,0 +1,116 @@
+---
+title: The 30-Day Public Speaking & Content Challenge
+subtitle: ""
+tagline: "Thirty days of output: recording a 60 second video every day for release to Instagram. #higherupwellnesschallenge"
+status: LIVE
+start: "2026-09-05"
+duration: 30 days
+tag: LAB
+description: Volume over polish. One 60-second video per day for 30 days. Stacking reps until the reps stop being scary.
+protocol:
+  - Record one 60-second talk on a daily.
+  - Schedule the video for posting to Instagram, no matter how cringe.
+  - No edits, no cuts.
+  - Review yesterday's output and pick one improvement.
+  - Log reps, reach, and energy each evening.
+href: https://kalenmichael.substack.com
+featured: true
+order: 2
+calendar:
+  start: "2026-08-13"
+  end: "2026-09-11"
+  days:
+    "2026-08-13":
+      label: "1"
+      title: Day 1 — Lets do this
+      note: Introduction to the experiment.
+      href: https://www.instagram.com/kalenmichael/reel/Db-ibr2MuaO/
+      linkLabel: watch the reel
+    "2026-08-14":
+      label: "2"
+      title: Day 2 - Growth illusion
+      note: Touching on the short-comings of comparison in social media.
+      href: https://www.instagram.com/kalenmichael/reel/DcAwukPM9V5/
+      linkLabel: watch the reel
+    "2026-08-15":
+      label: "3"
+      title: Day 3 - Reality mindset
+      note: It's our mind that shapes our reality.
+      href: https://www.instagram.com/kalenmichael/reel/DcDvYwgMNfA/
+      linkLabel: watch the reel
+    "2026-08-16":
+      label: "4"
+      title: Day 4 - Movement saves
+      note: How movement got me out of my depression
+      href: https://www.instagram.com/kalenmichael/reel/DcGfspxM-HY/
+      linkLabel: watch the reel
+    "2026-08-17":
+      label: "5"
+      title: Day 5 - The reaction arc
+      note: Understanding how extremes create more extremes.
+      href: https://www.instagram.com/kalenmichael/reel/DcKDrbGsPvt/
+      linkLabel: watch the reel
+    "2026-08-18":
+      label: "6"
+      title: Day 6 - Show up anyway
+      note: Clocking in after a long day. Happy birthday to me.
+      href: https://www.instagram.com/kalenmichael/reel/DcMpEzLMhLJ/
+      linkLabel: watch the reel
+    "2026-08-19":
+      label: "7"
+      title: Day 7 - Thinking frameworks
+      note: How the smartest people choose to think.
+      href: https://www.instagram.com/kalenmichael/reel/DcPA6zcstub/
+      linkLabel: watch the reel
+    "2026-08-20":
+      label: "8"
+      title: Day 8 - Changing beliefs
+      note: The top 3 beliefs that I chose to abandon because they did not serve me.
+      href: https://www.instagram.com/kalenmichael/reel/DcRdzIaMqJY/
+      linkLabel: watch the reel
+    "2026-08-21":
+      label: "9"
+      title: Day 9 - How I beat anxiety
+      note: Figuring out that anxiety may just be a check in, not a warning.
+      href: https://www.instagram.com/kalenmichael/reel/DckwD3sMmHN/
+      linkLabel: watch the reel
+    "2026-08-22":
+      label: "10"
+      title: Day 10 - The doom scroll cycle
+      note: Freestyling a late one after almost forgetting to record.
+      href: https://www.instagram.com/kalenmichael/reel/DcrkNo5se0L/
+      linkLabel: watch the reel
+    "2026-08-23":
+      label: "11"
+      title: Day 11
+      releaseDate: "2026-09-02"
+    "2026-08-24":
+      label: "12"
+      title: Day 12
+      releaseDate: "2026-09-05"
+    "2026-08-25":
+      label: "13"
+      title: Day 13
+      releaseDate: "2026-09-08"
+    "2026-08-26":
+      label: "14"
+      title: Day 14
+      releaseDate: "2026-09-11"
+    "2026-08-27":
+      label: "15"
+      title: Day 15
+      note: ""
+      releaseDate: "2026-09-14"
+    "2026-08-28":
+      label: "16"
+      title: Day 16
+      releaseDate: "2026-09-17"
+    "2026-08-29":
+      label: "17"
+      title: Day 17
+      releaseDate: "2026-09-20"
+    "2026-08-30":
+      label: "18"
+      title: Day 18
+      releaseDate: "2026-09-23"
+---

@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content'
+import Calendar from '../../components/Calendar.astro'
+import Status from '../../components/Status.astro'
+import Layout from '../../layouts/Layout.astro'
+import { CATEGORIES, type CategoryId } from '../../categories'
+import { daysRemaining, experimentEndDate } from '../../lib/dates'
+
+export async function getStaticPaths() {
+    const experiments = await getCollection('experiments')
+    return experiments
+        .filter((entry) => entry.data.status !== 'HIDDEN')
+        .map((entry) => ({
+            params: { slug: entry.id },
+            props: { entry },
+        }))
+}
+
+const { entry } = Astro.props
+const experiment = entry.data
+const category = CATEGORIES[experiment.tag as CategoryId] ?? {
+    name: experiment.tag,
+    desc: '',
+    color: 'text-slate-400',
+}
+
+const now = new Date()
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+const endDate = experimentEndDate(experiment)
+const remaining = endDate ? daysRemaining(endDate, today) : null
+
+const calendar = experiment.calendar
+const days = calendar?.days
+const hasMedia = days ? Object.values(days).some((day) => day.href || day.releaseDate) : false
+---
+
+<Layout title={`${experiment.title} // Mindset Lab`} elsewhere={false}>
+    <nav
+        slot="nav"
+        aria-label="Breadcrumb"
+        class="mb-8 flex flex-wrap items-center gap-1 pr-12 text-xs font-bold uppercase tracking-[0.2em] text-slate-500"
+    >
+        <a href="/" class="group inline-flex items-center gap-2 px-2 transition-colors hover:text-white">
+            <span class="text-slate-700 transition-transform group-hover:-translate-x-1">←</span>
+            MINDSET LAB
+        </a>
+        <span class="text-slate-700">/</span>
+        <span class="px-2 text-slate-500">EXPERIMENT</span>
+    </nav>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <div class="mb-6 flex flex-wrap items-baseline gap-4 text-xs">
+            <span class={`text-xs font-bold uppercase tracking-wider ${category.color}`}>
+                [{category.name}]
+            </span>
+            <span class="text-slate-600">status: </span>
+            <Status value={experiment.status} />
+            <span class="text-slate-600">start: {experiment.start}</span>
+            <span class="text-slate-600">duration: {experiment.duration}</span>
+        </div>
+        <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
+            {experiment.title}
+            {
+                experiment.subtitle && (
+                    <>
+                        <span class="font-normal text-slate-600"> // </span>
+                        <span class="text-slate-300">{experiment.subtitle}</span>
+                    </>
+                )
+            }
+        </h1>
+        <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">{experiment.tagline}</p>
+        {
+            experiment.status === 'LIVE' ? (
+                <p class="mt-10 text-sm text-slate-500">
+                    {remaining !== null
+                        ? `${remaining} ${remaining === 1 ? 'day' : 'days'} remaining`
+                        : '[ IN PROGRESS ]'}
+                </p>
+            ) : (
+                <a
+                    href={experiment.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="mt-10 group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
+                >
+                    <span class="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
+                        →
+                    </span>
+                    Read the write-up on Substack
+                </a>
+            )
+        }
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> The Setup
+        </h2>
+        <p class="mt-4 max-w-xl text-sm leading-relaxed text-slate-400">{experiment.description}</p>
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Protocol
+        </h2>
+        <ol class="mt-6">
+            {experiment.protocol.map((step, index) => (
+                <li class="flex items-baseline gap-4 border-b border-slate-800/70 py-3 text-sm">
+                    <span class="w-8 shrink-0 text-xs font-bold tracking-wider text-slate-600">
+                        {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span class="text-slate-300">{step}</span>
+                </li>
+            ))}
+        </ol>
+    </section>
+
+    {
+        calendar && (
+            <section class="border-b border-dashed border-slate-800 py-10">
+                <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                    <span class="text-slate-700">##</span> Calendar
+                </h2>
+                <p class="mt-4 text-sm leading-relaxed text-slate-500">
+                    Field notes and linked resources by experiment day.
+                </p>
+                <div class="mt-6">
+                    <Calendar start={calendar.start} end={calendar.end} days={calendar.days} />
+                </div>
+                {
+                    hasMedia && (
+                        <p class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500">
+                            <span>
+                                <span class="text-slate-400">↗</span> available online
+                            </span>
+                            <span>
+                                <span class="text-slate-600">~</span> completed & scheduled
+                            </span>
+                        </p>
+                    )
+                }
+            </section>
+        )
+    }
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Log
+        </h2>
+        <p class="mt-4 text-sm text-slate-500">
+            log: experiment in progress — field notes will land here.
+        </p>
+    </section>
+</Layout>

@@ -1,0 +1,159 @@
+---
+import { getCollection } from 'astro:content'
+import ExperimentRow from '../components/ExperimentRow.astro'
+import MoveLeftIcon from '../components/MoveLeftIcon.astro'
+import Layout from '../layouts/Layout.astro'
+import { CATEGORIES, type CategoryId } from '../categories'
+
+const experiments = (await getCollection('experiments'))
+    .map((entry) => ({ slug: entry.id, ...entry.data }))
+    .filter((experiment) => experiment.status !== 'HIDDEN' && experiment.featured)
+    .sort((a, b) => a.order - b.order)
+
+const notes = (await getCollection('notes'))
+    .map((entry) => entry.data)
+    .sort((a, b) => a.no.localeCompare(b.no, undefined, { numeric: true }))
+
+const MENU = [
+    { label: 'FEATURED', href: '/#featured' },
+    { label: 'EXPERIMENTS', href: '/experiments' },
+    { label: 'VAULT', href: '/vault' },
+    { label: 'ELSEWHERE', href: '/#elsewhere' },
+]
+
+const PILLARS: { num: string; id: CategoryId; href: string }[] = [
+    { num: '01', id: 'RAW', href: 'https://kalenmichael.substack.com' },
+    { num: '02', id: 'LAB', href: 'https://kalenmichael.substack.com' },
+    { num: '03', id: 'TOOLKIT', href: 'https://kalenmichael.substack.com' },
+]
+---
+
+<Layout logoHeading>
+    <nav
+        slot="nav"
+        aria-label="Section"
+        class="mb-8 flex flex-wrap items-center gap-1 pr-12 text-xs font-bold uppercase tracking-[0.2em] text-slate-500"
+    >
+        {MENU.map((item, index) => (
+            <>
+                {index > 0 && <span class="text-slate-700">/</span>}
+                <a href={item.href} class="px-2 transition-colors hover:text-white">
+                    {item.label}
+                </a>
+            </>
+        ))}
+    </nav>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <p class="max-w-xl text-sm leading-relaxed text-slate-400">
+            A public log of experiments in mindset, physical endurance, and operational discipline.
+            Real frameworks, zero wishy-washy fluff.
+        </p>
+
+        <a
+            href="https://kalenmichael.substack.com"
+            class="mt-10 group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
+        >
+            <span class="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
+                →
+            </span>
+            Read the full archive on Substack
+        </a>
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Core Pillars
+        </h2>
+        <div class="mt-6">
+            {PILLARS.map((pillar) => {
+                const category = CATEGORIES[pillar.id]
+                return (
+                    <div class="group flex flex-col gap-1 border-b border-slate-800/70 py-4 sm:flex-row sm:items-baseline sm:gap-4">
+                        <span class="w-8 shrink-0 text-xs font-bold tracking-wider text-slate-600">
+                            {pillar.num}
+                        </span>
+                        <span class={`w-28 shrink-0 font-medium ${category.color}`}>
+                            {category.name}
+                        </span>
+                        <span class="text-sm text-slate-500">{category.desc}</span>
+                    </div>
+                )
+            })}
+        </div>
+    </section>
+
+    <section id="experiments" class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Featured Experiments
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            Field studies worth watching right now.
+        </p>
+        <div class="mt-6">
+            {experiments.map((experiment) => (
+                <ExperimentRow
+                    slug={experiment.slug}
+                    title={experiment.title}
+                    subtitle={experiment.subtitle}
+                    tagline={experiment.tagline}
+                    status={experiment.status}
+                    duration={experiment.duration}
+                    tag={experiment.tag}
+                />
+            ))}
+        </div>
+        <a
+            href="/experiments"
+            class="group mt-8 inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
+        >
+            <span class="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
+                →
+            </span>
+            View all experiments
+        </a>
+    </section>
+
+    <section id="featured" class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Featured Notes
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            A curated log of high-signal experiments and foundational dispatches.
+        </p>
+        <div class="mt-6">
+            {notes.map((note) => {
+                const category = CATEGORIES[note.tag] ?? {
+                    name: note.tag,
+                    desc: '',
+                    color: 'text-slate-400',
+                }
+                return (
+                    <a
+                        href={note.href}
+                        class="group flex flex-col gap-2 border-b border-slate-800/70 py-5"
+                    >
+                        <div class="flex items-baseline gap-4 text-sm">
+                            <span class="text-xs font-bold tracking-wider text-slate-600">
+                                {note.no}
+                            </span>
+                            <span class="text-xs text-slate-500">{note.date}</span>
+                            <span class={`text-xs font-bold uppercase tracking-wider ${category.color}`}>
+                                [{category.name}]
+                            </span>
+                        </div>
+                        <span class="flex items-center gap-2 font-medium">
+                            <span class="text-white transition-colors group-hover:text-slate-300">
+                                {note.title}
+                            </span>
+                            <MoveLeftIcon />
+                        </span>
+                        {note.desc && (
+                            <span class="text-sm leading-relaxed text-slate-500">{note.desc}</span>
+                        )}
+                    </a>
+                )
+            })}
+        </div>
+    </section>
+</Layout>

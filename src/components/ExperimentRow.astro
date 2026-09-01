@@ -1,0 +1,47 @@
+---
+import { CATEGORIES, type CategoryId } from '../categories'
+import MoveLeftIcon from './MoveLeftIcon.astro'
+import Status from './Status.astro'
+
+interface Props {
+    slug: string
+    title: string
+    subtitle?: string
+    tagline: string
+    status: string
+    duration: string
+    tag: string
+}
+
+const { slug, title, subtitle, tagline, status, duration, tag } = Astro.props
+const category = CATEGORIES[tag as CategoryId] ?? {
+    name: tag,
+    desc: '',
+    color: 'text-slate-400',
+}
+---
+
+<a href={`/experiment/${slug}/`} class="group flex flex-col gap-2 border-b border-slate-800/70 py-5">
+    <div class="flex items-baseline gap-4 text-sm">
+        <span class={`text-xs font-bold uppercase tracking-wider ${category.color}`}>
+            [{category.name}]
+        </span>
+        <span class="text-xs text-slate-500">{duration}</span>
+        <Status value={status} />
+    </div>
+    <span class="flex items-center gap-2 font-medium">
+        <span class="text-white transition-colors group-hover:text-slate-300">
+            {title}
+            {
+                subtitle && (
+                    <>
+                        <span class="text-slate-600"> // </span>
+                        {subtitle}
+                    </>
+                )
+            }
+        </span>
+        <MoveLeftIcon />
+    </span>
+    <span class="text-sm leading-relaxed text-slate-500">{tagline}</span>
+</a>

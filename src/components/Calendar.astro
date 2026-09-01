@@ -1,0 +1,267 @@
+---
+import type { CalendarDay } from '../lib/dates'
+import { formatDateLabel, monthWeeks, toISO, toLocalDate } from '../lib/dates'
+
+interface Props {
+    start: string
+    end: string
+    days?: Record<string, CalendarDay>
+}
+
+const { start, end, days = {} } = Astro.props
+
+const MONTH_NAMES = [
+    'JANUARY',
+    'FEBRUARY',
+    'MARCH',
+    'APRIL',
+    'MAY',
+    'JUNE',
+    'JULY',
+    'AUGUST',
+    'SEPTEMBER',
+    'OCTOBER',
+    'NOVEMBER',
+    'DECEMBER',
+]
+
+const WEEKDAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+
+const startDate = toLocalDate(start)
+const endDate = toLocalDate(end)
+
+const now = new Date()
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+const months: { year: number; month: number }[] = []
+const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
+const lastMonth = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
+while (cursor <= lastMonth) {
+    months.push({ year: cursor.getFullYear(), month: cursor.getMonth() })
+    cursor.setMonth(cursor.getMonth() + 1)
+}
+
+const dayIndex = (date: Date) => {
+    const utc = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+    return Math.floor((utc(date) - utc(startDate)) / 86400000) + 1
+}
+
+const inRange = (date: Date) => date >= startDate && date <= endDate
+---
+
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    {months.map(({ year, month }) => (
+        <div class="border border-slate-800/70 p-3">
+            <p class="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                {MONTH_NAMES[month]} {year}
+            </p>
+            <div class="grid grid-cols-7 gap-1">
+                {WEEKDAYS.map((weekday) => (
+                    <span
+                        class="pb-1 text-center text-[10px] font-bold uppercase tracking-wider text-slate-600"
+                    >
+                        {weekday}
+                    </span>
+                ))}
+                {monthWeeks(year, month)
+                    .flat()
+                    .map((day, index) => {
+                        if (day === null) return <span class="h-12" />
+                        const date = new Date(year, month, day)
+                        if (!inRange(date)) return <span class="h-12" />
+
+                        const iso = toISO(date)
+                        const entry = days[iso]
+                        const available = Boolean(entry?.href)
+                        const pending = !available && Boolean(entry?.releaseDate)
+                        const isToday = date.getTime() === today.getTime()
+                        const isFuture = date > today
+
+                        const tone = isToday
+                            ? 'bg-slate-800 text-white ring-1 ring-slate-500'
+                            : isFuture
+                                ? 'bg-slate-900/25 text-slate-600 opacity-60 hover:opacity-90'
+                                : 'bg-slate-900/60'
+
+                        return (
+                            <button
+                                type="button"
+                                data-cal-day={iso}
+                                aria-label={`${formatDateLabel(date)} — open field log`}
+                                aria-current={isToday ? 'date' : undefined}
+                                class={`relative flex h-12 items-center justify-center rounded-sm p-1 text-[10px] transition-colors hover:bg-slate-800 hover:text-white ${tone}`}
+                            >
+                                <span
+                                    class={`absolute right-1 top-0.5 text-[9px] font-bold leading-none ${isToday ? 'text-white' : 'text-slate-500'}`}
+                                >
+                                    {date.getDate()}
+                                </span>
+                                <span
+                                    class={
+                                        entry?.label
+                                            ? 'text-sm font-medium leading-none text-slate-300'
+                                            : 'text-sm leading-none text-slate-600'
+                                    }
+                                >
+                                    {entry?.label ?? dayIndex(date)}
+                                    {available && (
+                                        <span class="ml-0.5 text-[10px] text-slate-500">↗</span>
+                                    )}
+                                    {pending && (
+                                        <span class="ml-0.5 text-[10px] text-slate-600">~</span>
+                                    )}
+                                </span>
+                            </button>
+                        )
+                    })}
+            </div>
+        </div>
+    ))}
+</div>
+
+{(() => {
+    const cells: Date[] = []
+    for (const { year, month } of months) {
+        for (const day of monthWeeks(year, month).flat()) {
+            if (day === null) continue
+            const date = new Date(year, month, day)
+            if (inRange(date)) cells.push(date)
+        }
+    }
+    return cells.map((date) => {
+        const iso = toISO(date)
+        const entry = days[iso]
+        return (
+            <template data-cal-panel={iso} data-label={formatDateLabel(date)}>
+                {entry ? (
+                    <>
+                        <p class="font-medium text-white">
+                            {entry.title ?? `Day ${dayIndex(date)}`}
+                        </p>
+                        {entry.note && <p class="mt-2 text-slate-400">{entry.note}</p>}
+                        {entry.href ? (
+                            <a
+                                href={entry.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="group mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-white"
+                            >
+                                <span class="text-slate-600 transition-transform group-hover:translate-x-1">
+                                    →
+                                </span>
+                                {entry.linkLabel ?? 'open related content'}
+                            </a>
+                        ) : entry.releaseDate ? (
+                            <p class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                                not released yet — expected{' '}
+                                {formatDateLabel(toLocalDate(entry.releaseDate))}
+                            </p>
+                        ) : null}
+                    </>
+                ) : (
+                    <p class="text-slate-400">Day {dayIndex(date)} — no log yet.</p>
+                )}
+            </template>
+        )
+    })
+})()}
+
+<div
+    id="cal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Field log"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+>
+    <div class="absolute inset-0 bg-black/70" data-cal-backdrop></div>
+    <div class="relative w-full max-w-md border border-slate-700 bg-slate-950 p-6">
+        <div class="flex items-center justify-between gap-4">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500" data-cal-date></p>
+            <div class="flex items-center gap-1">
+                <button
+                    type="button"
+                    data-cal-prev
+                    aria-label="Previous day"
+                    class="px-2 py-1 text-sm text-slate-400 transition-colors hover:text-white disabled:cursor-default disabled:text-slate-700 disabled:hover:text-slate-700"
+                >
+                    ←
+                </button>
+                <button
+                    type="button"
+                    data-cal-next
+                    aria-label="Next day"
+                    class="px-2 py-1 text-sm text-slate-400 transition-colors hover:text-white disabled:cursor-default disabled:text-slate-700 disabled:hover:text-slate-700"
+                >
+                    →
+                </button>
+                <button
+                    type="button"
+                    data-cal-close
+                    aria-label="Close"
+                    class="px-2 py-1 text-xs uppercase tracking-wider text-slate-500 transition-colors hover:text-white"
+                >
+                    [close]
+                </button>
+            </div>
+        </div>
+        <div class="mt-4 text-sm leading-relaxed text-slate-300" data-cal-body></div>
+    </div>
+</div>
+
+<script>
+    const dialog = document.getElementById('cal-dialog')
+
+    if (dialog) {
+        const cells = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-cal-day]'))
+        const panels = new Map<string, HTMLTemplateElement>(
+            Array.from(document.querySelectorAll<HTMLTemplateElement>('[data-cal-panel]')).map(
+                (template) => [template.getAttribute('data-cal-panel') ?? '', template],
+            ),
+        )
+        const dateEl = dialog.querySelector<HTMLElement>('[data-cal-date]')!
+        const bodyEl = dialog.querySelector<HTMLDivElement>('[data-cal-body]')!
+        const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-cal-prev]')!
+        const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-cal-next]')!
+        const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-cal-close]')!
+        const backdrop = dialog.querySelector<HTMLDivElement>('[data-cal-backdrop]')!
+        let index = -1
+
+        const show = (next: number) => {
+            const cell = cells[next]
+            if (!cell) return
+            index = next
+            const iso = cell.getAttribute('data-cal-day') ?? ''
+            const panel = panels.get(iso)
+            const label = panel?.getAttribute('data-label') ?? ''
+            dateEl.textContent = label
+            bodyEl.replaceChildren(
+                panel?.content.cloneNode(true) ??
+                    document.createTextNode('No log for this day.'),
+            )
+            prevBtn.disabled = index === 0
+            nextBtn.disabled = index === cells.length - 1
+            dialog.classList.add('flex')
+            dialog.classList.remove('hidden')
+            dialog.setAttribute('aria-label', `Field log for ${label}`)
+            closeBtn.focus()
+        }
+
+        const hide = () => {
+            dialog.classList.remove('flex')
+            dialog.classList.add('hidden')
+        }
+
+        cells.forEach((cell, i) => cell.addEventListener('click', () => show(i)))
+        prevBtn.addEventListener('click', () => {
+            if (index > 0) show(index - 1)
+        })
+        nextBtn.addEventListener('click', () => {
+            if (index < cells.length - 1) show(index + 1)
+        })
+        closeBtn.addEventListener('click', hide)
+        backdrop.addEventListener('click', hide)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') hide()
+        })
+    }
+</script>

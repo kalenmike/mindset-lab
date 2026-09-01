@@ -1,0 +1,66 @@
+---
+import '../styles/global.css'
+import Footer from '../components/Footer.astro'
+import Logo from '../components/Logo.astro'
+import ThemeToggle from '../components/ThemeToggle.astro'
+
+interface Props {
+    title?: string
+    description?: string
+    logoHeading?: boolean
+    elsewhere?: boolean
+}
+
+const {
+    title = 'Mindset Lab',
+    description = 'A public log of experiments in mindset, physical endurance, and operational discipline. Real frameworks, zero wishy-washy fluff.',
+    logoHeading = false,
+    elsewhere = true,
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128.png" />
+        <link rel="icon" type="image/png" sizes="500x500" href="/favicon-500.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <script is:inline>
+            ;(function () {
+                var theme = null
+                try {
+                    theme = localStorage.getItem('mindset-lab-theme')
+                } catch (e) {}
+                if (theme !== 'light' && theme !== 'dark') {
+                    theme = window.matchMedia('(prefers-color-scheme: light)').matches
+                        ? 'light'
+                        : 'dark'
+                }
+                if (theme === 'light') document.documentElement.classList.add('light')
+            })()
+        </script>
+    </head>
+    <body>
+        <main class="min-h-svh bg-slate-950 font-mono text-slate-300 selection:bg-slate-300 selection:text-slate-950">
+            <ThemeToggle />
+            <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col px-6 py-12 sm:px-8">
+                <header class="border-b border-dashed border-slate-800 pb-10">
+                    <slot name="nav" />
+                    <Logo heading={logoHeading} />
+                </header>
+                <div class="flex-1">
+                    <slot />
+                </div>
+                <Footer elsewhere={elsewhere} />
+            </div>
+        </main>
+    </body>
+</html>
