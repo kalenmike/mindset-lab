@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import Calendar from '../../components/Calendar.astro'
+import MoveLeftIcon from '../../components/MoveLeftIcon.astro'
 import Status from '../../components/Status.astro'
 import Layout from '../../layouts/Layout.astro'
 import { CATEGORIES, type CategoryId } from '../../categories'
@@ -32,22 +33,14 @@ const remaining = endDate ? daysRemaining(endDate, today) : null
 const calendar = experiment.calendar
 const days = calendar?.days
 const hasMedia = days ? Object.values(days).some((day) => day.href || day.releaseDate) : false
+
+const notes = (await getCollection('notes'))
+    .map((entry) => entry.data)
+    .filter((note) => note.experiment === entry.id)
+    .sort((a, b) => a.date.localeCompare(b.date))
 ---
 
-<Layout title={`${experiment.title} // Mindset Lab`} elsewhere={false}>
-    <nav
-        slot="nav"
-        aria-label="Breadcrumb"
-        class="mb-8 flex flex-wrap items-center gap-1 pr-12 text-xs font-bold uppercase tracking-[0.2em] text-slate-500"
-    >
-        <a href="/" class="group inline-flex items-center gap-2 px-2 transition-colors hover:text-white">
-            <span class="text-slate-700 transition-transform group-hover:-translate-x-1">←</span>
-            MINDSET LAB
-        </a>
-        <span class="text-slate-700">/</span>
-        <span class="px-2 text-slate-500">EXPERIMENT</span>
-    </nav>
-
+<Layout title={`${experiment.title} // Mindset Lab`}>
     <section class="border-b border-dashed border-slate-800 py-10">
         <div class="mb-6 flex flex-wrap items-baseline gap-4 text-xs">
             <span class={`text-xs font-bold uppercase tracking-wider ${category.color}`}>
@@ -60,14 +53,6 @@ const hasMedia = days ? Object.values(days).some((day) => day.href || day.releas
         </div>
         <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
             {experiment.title}
-            {
-                experiment.subtitle && (
-                    <>
-                        <span class="font-normal text-slate-600"> // </span>
-                        <span class="text-slate-300">{experiment.subtitle}</span>
-                    </>
-                )
-            }
         </h1>
         <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">{experiment.tagline}</p>
         {
@@ -123,7 +108,7 @@ const hasMedia = days ? Object.values(days).some((day) => day.href || day.releas
                     <span class="text-slate-700">##</span> Calendar
                 </h2>
                 <p class="mt-4 text-sm leading-relaxed text-slate-500">
-                    Field notes and linked resources by experiment day.
+                    Logs and linked resources by experiment day.
                 </p>
                 <div class="mt-6">
                     <Calendar start={calendar.start} end={calendar.end} days={calendar.days} />
@@ -146,10 +131,55 @@ const hasMedia = days ? Object.values(days).some((day) => day.href || day.releas
 
     <section class="border-b border-dashed border-slate-800 py-10">
         <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-            <span class="text-slate-700">##</span> Log
+            <span class="text-slate-700">##</span> Field Notes
         </h2>
-        <p class="mt-4 text-sm text-slate-500">
-            log: experiment in progress — field notes will land here.
-        </p>
+        {
+            notes.length > 0 ? (
+                <div class="mt-6">
+                    {notes.map((note) => {
+                        const noteCategory = CATEGORIES[note.tag as CategoryId] ?? {
+                            name: note.tag,
+                            desc: '',
+                            color: 'text-slate-400',
+                        }
+                        return (
+                            <a
+                                href={note.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="group flex flex-col gap-2 border-b border-slate-800/70 py-5"
+                            >
+                                <div class="flex items-baseline gap-4 text-sm">
+                                    <span class="text-xs font-bold tracking-wider text-slate-600">
+                                        {note.no}
+                                    </span>
+                                    <span class="text-xs text-slate-500">{note.date}</span>
+                                    <span
+                                        class={`text-xs font-bold uppercase tracking-wider ${noteCategory.color}`}
+                                    >
+                                        [{noteCategory.name}]
+                                    </span>
+                                </div>
+                                <span class="flex items-center gap-2 font-medium">
+                                    <span class="text-white transition-colors group-hover:text-slate-300">
+                                        {note.title}
+                                    </span>
+                                    <MoveLeftIcon />
+                                </span>
+                                {note.desc && (
+                                    <span class="text-sm leading-relaxed text-slate-500">
+                                        {note.desc}
+                                    </span>
+                                )}
+                            </a>
+                        )
+                    })}
+                </div>
+            ) : (
+                <p class="mt-4 text-sm text-slate-500">
+                    log: experiment in progress — field notes will land here.
+                </p>
+            )
+        }
     </section>
 </Layout>

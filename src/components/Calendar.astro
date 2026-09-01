@@ -68,7 +68,7 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                     .map((day, index) => {
                         if (day === null) return <span class="h-12" />
                         const date = new Date(year, month, day)
-                        if (!inRange(date)) return <span class="h-12" />
+                        if (!inRange(date)) return <span class="h-12 rounded-sm bg-slate-900/30" />
 
                         const iso = toISO(date)
                         const entry = days[iso]
@@ -138,13 +138,15 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                         <p class="font-medium text-white">
                             {entry.title ?? `Day ${dayIndex(date)}`}
                         </p>
-                        {entry.note && <p class="mt-2 text-slate-400">{entry.note}</p>}
+                        {entry.note && (
+                            <pre class="mt-2 font-mono whitespace-pre-wrap text-slate-400">{entry.note}</pre>
+                        )}
                         {entry.href ? (
                             <a
                                 href={entry.href}
                                 target="_blank"
                                 rel="noreferrer"
-                                class="group mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-white"
+                                class="group mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-white"
                             >
                                 <span class="text-slate-600 transition-transform group-hover:translate-x-1">
                                     →

@@ -2,55 +2,58 @@
 import { getCollection } from 'astro:content'
 import MoveLeftIcon from '../../components/MoveLeftIcon.astro'
 import Layout from '../../layouts/Layout.astro'
-import { RESOURCE_TAGS } from '../../categories'
+import { CATEGORIES } from '../../categories'
 
-const resources = (await getCollection('resources'))
+const notes = (await getCollection('notes'))
     .map((entry) => entry.data)
     .sort((a, b) => a.no.localeCompare(b.no, undefined, { numeric: true }))
 ---
 
-<Layout title="Vault // Mindset Lab">
+<Layout title="Notes // Mindset Lab">
     <section class="border-b border-dashed border-slate-800 py-10">
         <p class="mb-6 text-xs text-slate-600">the archive</p>
         <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
-            VAULT
+            NOTES
         </h1>
         <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">
-            A collection of resources and tools: field-tested and battle-worn.
+            A log of high-signal experiments and foundational dispatches.
         </p>
     </section>
 
     <section class="border-b border-dashed border-slate-800 py-10">
         <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-            <span class="text-slate-700">##</span> All Resources
+            <span class="text-slate-700">##</span> All Notes
         </h2>
         <div class="mt-6">
-            {resources.map((resource) => {
-                const tag = RESOURCE_TAGS[resource.tag] ?? {
-                    name: resource.tag,
+            {notes.map((note) => {
+                const category = CATEGORIES[note.tag] ?? {
+                    name: note.tag,
                     desc: '',
                     color: 'text-slate-400',
                 }
                 return (
                     <a
-                        href={resource.href}
+                        href={note.href}
                         class="group flex flex-col gap-2 border-b border-slate-800/70 py-5"
                     >
                         <div class="flex items-baseline gap-4 text-sm">
                             <span class="text-xs font-bold tracking-wider text-slate-600">
-                                {resource.no}
+                                {note.no}
                             </span>
-                            <span class={`text-xs font-bold uppercase tracking-wider ${tag.color}`}>
-                                [{tag.name}]
+                            <span class="text-xs text-slate-500">{note.date}</span>
+                            <span class={`text-xs font-bold uppercase tracking-wider ${category.color}`}>
+                                [{category.name}]
                             </span>
                         </div>
                         <span class="flex items-center gap-2 font-medium">
                             <span class="text-white transition-colors group-hover:text-slate-300">
-                                {resource.title}
+                                {note.title}
                             </span>
                             <MoveLeftIcon />
                         </span>
-                        <span class="text-sm leading-relaxed text-slate-500">{resource.desc}</span>
+                        {note.desc && (
+                            <span class="text-sm leading-relaxed text-slate-500">{note.desc}</span>
+                        )}
                     </a>
                 )
             })}

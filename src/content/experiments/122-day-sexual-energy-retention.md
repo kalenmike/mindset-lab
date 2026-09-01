@@ -13,7 +13,7 @@ protocol:
   - "Monthly audit: what changed physically and mentally?"
 href: https://kalenmichael.substack.com
 featured: false
-order: 3
+order: 1
 calendar:
   start: "2026-09-01"
   end: "2026-12-31"

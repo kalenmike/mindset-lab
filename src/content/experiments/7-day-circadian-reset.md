@@ -10,10 +10,10 @@ description: "Seven days of morning sunlight immediately after waking, and a dai
 protocol:
   - Wake up with the alarm. No snooze.
   - Immediately leave the house for a walk.
-  - Minimum of 15-minutes of outdoor sunlight.
+  - Minimum of 15-minutes of morning outdoor sunlight.
 href: https://kalenmichael.substack.com/p/can-you-fix-your-broken-sleep-in
 featured: true
-order: 1
+order: 3
 calendar:
   start: "2026-07-30"
   end: "2026-08-05"
@@ -21,7 +21,8 @@ calendar:
     "2026-07-30":
       label: "1"
       title: Day 1 - The Catalyst
-      note: Alarm didn't sound, up at 07:29 by pure luck.
+      note: |
+            Alarm didn't sound, up at 07:29 by pure luck.
       href: https://www.instagram.com/kalenmichael/reel/DbqKfZcMcGA/
       linkLabel: watch the reel
     "2026-07-31":

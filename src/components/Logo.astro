@@ -1,25 +1,17 @@
 ---
+import FlaskIcon from './FlaskIcon.astro'
+
 interface Props {
-    heading?: boolean
+    class?: string
 }
 
-const { heading = false } = Astro.props
-
-const wordmarkClass =
-    'text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl'
+const { class: className } = Astro.props
 ---
 
-<div>
-    <p class="mb-6 text-xs text-slate-600">welcome to the experiment</p>
-    {
-        heading ? (
-            <h1 class={wordmarkClass}>
-                MINDSET LAB <span class="font-normal text-slate-600">//</span> KALEN MICHAEL
-            </h1>
-        ) : (
-            <p class={wordmarkClass}>
-                MINDSET LAB <span class="font-normal text-slate-600">//</span> KALEN MICHAEL
-            </p>
-        )
-    }
-</div>
+<a
+    href="/"
+    class={`group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-600 transition-colors hover:text-white ${className ?? ''}`}
+>
+    <FlaskIcon />
+    MINDSET LAB <span class="font-normal text-slate-800">//</span> KALEN MICHAEL
+</a>

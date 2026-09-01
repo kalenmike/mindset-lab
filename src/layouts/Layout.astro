@@ -7,16 +7,29 @@ import ThemeToggle from '../components/ThemeToggle.astro'
 interface Props {
     title?: string
     description?: string
-    logoHeading?: boolean
-    elsewhere?: boolean
 }
 
 const {
     title = 'Mindset Lab',
     description = 'A public log of experiments in mindset, physical endurance, and operational discipline. Real frameworks, zero wishy-washy fluff.',
-    logoHeading = false,
-    elsewhere = true,
 } = Astro.props
+
+const MENU = [
+    { id: 'experiments', label: 'EXPERIMENTS', href: '/experiments' },
+    { id: 'notes', label: 'NOTES', href: '/notes' },
+    { id: 'vault', label: 'VAULT', href: '/vault' },
+    { id: 'elsewhere', label: 'ELSEWHERE', href: '#elsewhere' },
+]
+
+const pathname = Astro.url.pathname
+const active =
+    pathname === '/experiments' || pathname.startsWith('/experiment/')
+        ? 'experiments'
+        : pathname === '/notes'
+          ? 'notes'
+          : pathname === '/vault'
+            ? 'vault'
+            : null
 ---
 
 <!doctype html>
@@ -50,16 +63,33 @@ const {
     </head>
     <body>
         <main class="min-h-svh bg-slate-950 font-mono text-slate-300 selection:bg-slate-300 selection:text-slate-950">
-            <ThemeToggle />
-            <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col px-6 py-12 sm:px-8">
+            <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col px-6 pt-8 pb-12 sm:px-8">
                 <header class="border-b border-dashed border-slate-800 pb-10">
-                    <slot name="nav" />
-                    <Logo heading={logoHeading} />
+                    <div class="mb-8 flex items-center justify-between gap-4">
+                        <Logo />
+                        <ThemeToggle />
+                    </div>
+                    <nav
+                        aria-label="Section"
+                        class="flex flex-wrap items-center gap-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-500"
+                    >
+                        {MENU.map((item, index) => (
+                            <>
+                                {index > 0 && <span class="text-slate-700">/</span>}
+                                <a
+                                    href={item.href}
+                                    class={`px-2 transition-colors hover:text-white ${item.id === active ? 'text-white' : ''}`}
+                                >
+                                    {item.label}
+                                </a>
+                            </>
+                        ))}
+                    </nav>
                 </header>
                 <div class="flex-1">
                     <slot />
                 </div>
-                <Footer elsewhere={elsewhere} />
+                <Footer />
             </div>
         </main>
     </body>

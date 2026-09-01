@@ -45,6 +45,7 @@ const notes = defineCollection({
         title: z.string(),
         desc: z.string().optional(),
         href: z.string(),
+        experiment: z.string().optional(),
     }),
 })
 
