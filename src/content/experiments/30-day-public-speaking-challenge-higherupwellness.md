@@ -89,34 +89,38 @@ calendar:
     "2026-08-24":
       label: "12"
       title: Day 12 - Delusional Optimists
-      releaseDate: "2026-09-05"
+      releaseDate: "2026-09-04"
     "2026-08-25":
       label: "13"
       title: Day 13 - Don't earn it, won't yearn it
-      releaseDate: "2026-09-08"
+      releaseDate: "2026-09-07"
     "2026-08-26":
       label: "14"
       title: Day 14 - You're wishing away the best part
-      releaseDate: "2026-09-11"
+      releaseDate: "2026-09-10"
     "2026-08-27":
       label: "15"
       title: Day 15 - What's your contribution score
       note: ""
-      releaseDate: "2026-09-14"
+      releaseDate: "2026-09-13"
     "2026-08-28":
       label: "16"
       title: Day 16 - My life in 60 seconds
-      releaseDate: "2026-09-17"
+      releaseDate: "2026-09-16"
     "2026-08-29":
       label: "17"
       title: Day 17 - Somewhere we lost the way
-      releaseDate: "2026-09-20"
+      releaseDate: "2026-09-19"
     "2026-08-30":
       label: "18"
       title: Day 18 - Running today really showed this
-      releaseDate: "2026-09-23"
+      releaseDate: "2026-09-22"
     "2026-08-31":
       label: "19"
       title: Day 19 - Try this to unst*ck your life today
-      releaseDate: "2026-09-26"
+      releaseDate: "2026-09-25"
+    "2026-09-01":
+      label: "20"
+      title: Day 20 - Otherside of embarrasment
+      releaseDate: "2026-09-28"
 ---

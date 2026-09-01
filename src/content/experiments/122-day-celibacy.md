@@ -20,5 +20,10 @@ calendar:
   days:
     "2026-09-01":
       label: "1"
-      title: Day 1
+      title: Day 1 - Announcing it all
+      note: |
+            It's so easy for us to break promises to ourselves. Yesterday I decided to do this and already today I almost quit. To ensure I keep it up I made a public announcement on Instagram.
+
+            Day 1 - done.
+
 ---
