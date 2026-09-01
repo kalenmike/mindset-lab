@@ -32,7 +32,7 @@ const remaining = endDate ? daysRemaining(endDate, today) : null
 
 const calendar = experiment.calendar
 const days = calendar?.days
-const hasMedia = days ? Object.values(days).some((day) => day.href || day.releaseDate) : false
+const hasVideo = days ? Object.values(days).some((day) => day.href || day.releaseDate) : false
 
 const notes = (await getCollection('notes'))
     .map((entry) => entry.data)
@@ -113,18 +113,32 @@ const notes = (await getCollection('notes'))
                 <div class="mt-6">
                     <Calendar start={calendar.start} end={calendar.end} days={calendar.days} />
                 </div>
-                {
-                    hasMedia && (
-                        <p class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500">
-                            <span>
-                                <span class="text-slate-400">↗</span> available online
-                            </span>
-                            <span>
-                                <span class="text-slate-600">~</span> completed & scheduled
-                            </span>
-                        </p>
-                    )
-                }
+                <p class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500">
+                    <span class="inline-flex items-center gap-2">
+                        <span class="grid size-3 place-items-center bg-slate-900/60 leading-none text-slate-500">
+                            ·
+                        </span>
+                        done
+                    </span>
+                    <span class="inline-flex items-center gap-2">
+                        <span class="grid size-3 place-items-center border border-dashed border-slate-500 bg-slate-900/40 leading-none text-slate-500">
+                            ·
+                        </span>
+                        overdue
+                    </span>
+                    {
+                        hasVideo && (
+                            <>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <span class="text-slate-400">↗</span> video available
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <span class="text-slate-600">◷</span> video scheduled
+                                </span>
+                            </>
+                        )
+                    }
+                </p>
             </section>
         )
     }

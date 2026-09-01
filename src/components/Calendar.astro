@@ -74,14 +74,19 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                         const entry = days[iso]
                         const available = Boolean(entry?.href)
                         const pending = !available && Boolean(entry?.releaseDate)
+                        const logged = Boolean(entry)
+                        const isPast = date < today
                         const isToday = date.getTime() === today.getTime()
                         const isFuture = date > today
+                        const overdue = isPast && !logged
 
                         const tone = isToday
                             ? 'bg-slate-800 text-white ring-1 ring-slate-500'
                             : isFuture
                                 ? 'bg-slate-900/25 text-slate-600 opacity-60 hover:opacity-90'
-                                : 'bg-slate-900/60'
+                                : overdue
+                                    ? 'border border-dashed border-slate-700 bg-slate-900/40'
+                                    : 'bg-slate-900/60'
 
                         return (
                             <button
@@ -108,7 +113,7 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                                         <span class="ml-0.5 text-[10px] text-slate-500">↗</span>
                                     )}
                                     {pending && (
-                                        <span class="ml-0.5 text-[10px] text-slate-600">~</span>
+                                        <span class="ml-0.5 text-[10px] text-slate-600">◷</span>
                                     )}
                                 </span>
                             </button>
