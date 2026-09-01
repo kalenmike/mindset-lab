@@ -10,4 +10,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://kalenmichael.com/sitemap.xml
+Sitemap: https://kalenmichael.com/sitemap-index.xml
