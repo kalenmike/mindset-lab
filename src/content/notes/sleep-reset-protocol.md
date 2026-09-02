@@ -1,5 +1,5 @@
 ---
-no: "002"
+no: "001"
 date: "2026-08-20"
 tag: LAB
 title: The Sleep Reset Protocol

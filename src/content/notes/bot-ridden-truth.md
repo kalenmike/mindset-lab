@@ -1,5 +1,5 @@
 ---
-no: "001"
+no: "003"
 date: "2026-08-29"
 tag: RAW
 title: The Bot-Ridden Truth of Instagram Boost

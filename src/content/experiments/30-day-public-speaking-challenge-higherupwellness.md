@@ -128,5 +128,6 @@ calendar:
     "2026-09-02":
       label: "21"
       title: Day 21 - [RAW] I've been coregulating
+      note: I got to this video a little late after a 2-hour call with my mom about mindset.
       releaseDate: "2026-09-30"
 ---
