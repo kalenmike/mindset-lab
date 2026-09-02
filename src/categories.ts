@@ -17,17 +17,17 @@ export type ResourceTag = {
 export const CATEGORIES: Record<CategoryId, Category> = {
     RAW: {
         name: 'RAW',
-        desc: 'Unfiltered notes on career rebuilding, identity shifts, and navigating high-stakes transitions.',
+        desc: 'How I think. The public diary of the rebuild. Wins, losses, behind-the-scenes friction, and raw vulnerability as I log what it actually costs to earn back self-trust from zero.',
         color: 'text-sky-400',
     },
     LAB: {
         name: 'LAB',
-        desc: 'Active experiments in mental models, discipline systems, and human performance.',
+        desc: 'How I Test. Self-trust experiments run in public. Pushing past comfort zones and testing discipline through brutal challenges to see what happens when you commit every week.',
         color: 'text-violet-400',
     },
     TOOLKIT: {
         name: 'TOOLKIT',
-        desc: 'Practical execution frameworks, routines, and physical endurance data (e.g., marathon blocks).',
+        desc: "What Works. Frameworks, routines, and data extracted from the experiments. No theory, just tools and systems captured as they prove themselves in the field. Hard proof over quick fixes.",
         color: 'text-amber-400',
     },
 }
