@@ -6,10 +6,11 @@ interface Props {
 const { elsewhere = true } = Astro.props
 
 const SOCIALS = [
-    { label: 'youtube', href: 'https://youtube.com/@kalenmichael' },
-    { label: 'instagram', href: 'https://instagram.com/kalenmichael' },
-    { label: 'tiktok', href: 'https://tiktok.com/@kalenmichael' },
-    { label: 'x', href: 'https://x.com/kalenmichael' },
+    { label: '[youtube]', href: 'https://youtube.com/@kalenmichael' },
+    { label: '[instagram]', href: 'https://instagram.com/kalenmichael' },
+    { label: '[tiktok]', href: 'https://tiktok.com/@kalenmichael' },
+    { label: '[substack]', href: 'https://substack.com/@kalenmichael' },
+    { label: '[x]', href: 'https://x.com/kalenmichael' },
 ]
 ---
 
@@ -17,7 +18,7 @@ const SOCIALS = [
     elsewhere && (
         <section id="elsewhere" class="border-b border-dashed border-slate-800 py-10">
             <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                <span class="text-slate-700">##</span> Elsewhere
+        <span class="text-slate-700">##</span> Elsewhere <span class="text-slate-600">// @kalenmichael</span>
             </h2>
             <div class="flex flex-wrap gap-x-10 gap-y-4 pt-6">
                 {SOCIALS.map((social) => (
@@ -28,7 +29,7 @@ const SOCIALS = [
                         class="group flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-white"
                     >
                         <span class="text-slate-700 group-hover:text-slate-400">↗</span>
-                        {social.label} <span class="text-slate-600">/@kalenmichael</span>
+                        {social.label} 
                     </a>
                 ))}
             </div>
