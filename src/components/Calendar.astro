@@ -92,11 +92,13 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                             <button
                                 type="button"
                                 data-cal-day={iso}
+                                data-cal-logged={logged ? 'true' : 'false'}
                                 aria-label={`${formatDateLabel(date)} — open field log`}
                                 aria-current={isToday ? 'date' : undefined}
                                 class={`relative flex h-12 items-center justify-center rounded-sm p-1 text-[10px] transition-colors hover:bg-slate-800 hover:text-white ${tone}`}
                             >
                                 <span
+                                    data-cal-date-num
                                     class={`absolute right-1 top-0.5 text-[9px] font-bold leading-none ${isToday ? 'text-white' : 'text-slate-500'}`}
                                 >
                                     {date.getDate()}
@@ -220,6 +222,34 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
 
     if (dialog) {
         const cells = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-cal-day]'))
+
+        const todayDate = new Date()
+        const today = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())
+
+        const stateClass = (iso: string, logged: boolean) => {
+            const [y, m, d] = iso.split('-').map(Number)
+            const date = new Date(y, m - 1, d)
+            if (date.getTime() === today.getTime()) return 'bg-slate-800 text-white ring-1 ring-slate-500'
+            if (date > today) return 'bg-slate-900/25 text-slate-600 opacity-60 hover:opacity-90'
+            return logged ? 'bg-slate-900/60' : 'border border-dashed border-slate-700 bg-slate-900/40'
+        }
+
+        const applyState = () => {
+            for (const cell of cells) {
+                const iso = cell.getAttribute('data-cal-day') ?? ''
+                const logged = cell.getAttribute('data-cal-logged') === 'true'
+                const isToday = stateClass(iso, logged).includes('ring-1')
+                cell.className =
+                    'relative flex h-12 items-center justify-center rounded-sm p-1 text-[10px] transition-colors hover:bg-slate-800 hover:text-white ' +
+                    stateClass(iso, logged)
+                if (isToday) cell.setAttribute('aria-current', 'date')
+                else cell.removeAttribute('aria-current')
+                const dateNum = cell.querySelector<HTMLElement>('[data-cal-date-num]')
+                dateNum?.classList.toggle('text-white', isToday)
+            }
+        }
+        applyState()
+
         const panels = new Map<string, HTMLTemplateElement>(
             Array.from(document.querySelectorAll<HTMLTemplateElement>('[data-cal-panel]')).map(
                 (template) => [template.getAttribute('data-cal-panel') ?? '', template],
