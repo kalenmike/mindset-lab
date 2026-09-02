@@ -25,5 +25,9 @@ calendar:
             It's so easy for us to break promises to ourselves. Yesterday I decided to do this and already today I almost quit. To ensure I keep it up I made a public announcement on Instagram.
 
             Day 1 - done.
-
+    "2026-09-02":
+      label: "2"
+      title: Day 2 - Understanding attraction
+      note: |
+            I spent my morning researching attraction and how people confuse it with objectfication. I found some helpful analogies to use on this journey.
 ---
