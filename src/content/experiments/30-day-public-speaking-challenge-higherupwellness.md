@@ -95,7 +95,8 @@ calendar:
     "2026-08-25":
       label: "13"
       title: Day 13 - [RAW] Don't earn it, won't yearn it
-      releaseDate: "2026-09-07"
+      href: https://www.instagram.com/p/Dc0W-irs0gn/
+      linkLabel: watch the reel
     "2026-08-26":
       label: "14"
       title: Day 14 - [RAW] You're wishing away the best part
@@ -130,4 +131,9 @@ calendar:
       title: Day 21 - [RAW] I've been coregulating
       note: I got to this video a little late after a 2-hour call with my mom about mindset.
       releaseDate: "2026-09-30"
+    "2026-09-03":
+      label: "22"
+      title: Day 22 - [TOOLKIT] Your dream is not so far from your reality
+      note: I decided to double up the embarassment today and go film in public.
+      releaseDate: "2026-10-02"
 ---

@@ -30,4 +30,9 @@ calendar:
       title: Day 2 - Understanding attraction
       note: |
             I spent my morning researching attraction and how people confuse it with objectfication. I found some helpful analogies to use on this journey.
+    "2026-09-03":
+      label: "3"
+      title: Day 3 - Staying the course
+      note: I'm continuing on the course and finding moments of regret havijng started it. Fear kicks in occasionally that I have dedicated myself to pure romantic solitude for 4 months. But then I remember its not that long.
 ---
+
