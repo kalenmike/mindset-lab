@@ -100,40 +100,45 @@ calendar:
     "2026-08-26":
       label: "14"
       title: Day 14 - [RAW] You're wishing away the best part
-      releaseDate: "2026-09-10"
+      href: https://www.instagram.com/p/Dc3Gg3KMNtJ/
+      linkLabel: watch the reel
     "2026-08-27":
       label: "15"
       title: Day 15 - [TOOLKIT] What's your contribution score
-      note: ""
-      releaseDate: "2026-09-13"
+      releaseDate: "2026-09-05"
     "2026-08-28":
       label: "16"
       title: Day 16 - [RAW] My life in 60 seconds
-      releaseDate: "2026-09-16"
+      releaseDate: "2026-09-06"
     "2026-08-29":
       label: "17"
       title: Day 17 - [RAW] Somewhere we lost the way
-      releaseDate: "2026-09-19"
+      releaseDate: "2026-09-07"
     "2026-08-30":
       label: "18"
       title: Day 18 - [LAB] Running today really showed this
-      releaseDate: "2026-09-22"
+      releaseDate: "2026-09-08"
     "2026-08-31":
       label: "19"
       title: Day 19 - [TOOLKIT] Try this to unst*ck your life today
-      releaseDate: "2026-09-25"
+      releaseDate: "2026-09-09"
     "2026-09-01":
       label: "20"
       title: Day 20 - [RAW] Otherside of embarrasment
-      releaseDate: "2026-09-28"
+      releaseDate: "2026-09-10"
     "2026-09-02":
       label: "21"
       title: Day 21 - [RAW] I've been coregulating
       note: I got to this video a little late after a 2-hour call with my mom about mindset.
-      releaseDate: "2026-09-30"
+      releaseDate: "2026-09-11"
     "2026-09-03":
       label: "22"
       title: Day 22 - [TOOLKIT] Your dream is not so far from your reality
       note: I decided to double up the embarassment today and go film in public.
-      releaseDate: "2026-10-02"
+      releaseDate: "2026-09-12"
+    "2026-09-04":
+      label: "23"
+      title: Day 23 - [RAW] How its going
+      note: Just checking in today, I'm feeling a little burnt out and low on investment.
+      releaseDate: "2026-09-13"
 ---

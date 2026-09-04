@@ -10,8 +10,15 @@ const { class: className } = Astro.props
 
 <a
     href="/"
-    class={`group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-600 transition-colors hover:text-white ${className ?? ''}`}
+    class={`grid grid-cols-[auto_1fr] items-center gap-x-3 group ${className ?? ''}`}
 >
-    <FlaskIcon />
-    MINDSET LAB <span class="font-normal text-slate-800">//</span> KALEN MICHAEL
+    <div class="row-span-2 [&>svg]:size-6">
+        <FlaskIcon />
+    </div>
+    <span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors group-hover:text-white">
+        THE KALEN MICHAEL EXPERIMENT
+    </span>
+    <span class="text-[10px] font-normal text-slate-600 tracking-[0.15em]">
+        welcome to the lab
+    </span>
 </a>

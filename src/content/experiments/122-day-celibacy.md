@@ -33,6 +33,10 @@ calendar:
     "2026-09-03":
       label: "3"
       title: Day 3 - Staying the course
-      note: I'm continuing on the course and finding moments of regret havijng started it. Fear kicks in occasionally that I have dedicated myself to pure romantic solitude for 4 months. But then I remember its not that long.
+      note: I'm continuing on the course and finding moments of regret having started it. Fear kicks in occasionally that I have dedicated myself to pure romantic solitude for 4 months. But then I remember its not that long.
+    "2026-09-04":
+      label: "4"
+      title: Day 4
+      note: The extra space is giving me clarity. I notice moments when my mind would fall back on an escape, to try to avoid stress and boredom.
 ---
 
