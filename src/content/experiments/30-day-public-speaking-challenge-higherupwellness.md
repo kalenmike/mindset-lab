@@ -105,7 +105,8 @@ calendar:
     "2026-08-27":
       label: "15"
       title: Day 15 - [TOOLKIT] What's your contribution score
-      releaseDate: "2026-09-05"
+      href: https://www.instagram.com/p/Dc6StbWMies/
+      linkLabel: watch the reel
     "2026-08-28":
       label: "16"
       title: Day 16 - [RAW] My life in 60 seconds
@@ -141,4 +142,8 @@ calendar:
       title: Day 23 - [RAW] How its going
       note: Just checking in today, I'm feeling a little burnt out and low on investment.
       releaseDate: "2026-09-13"
+    "2026-09-05":
+      label: "24"
+      title: Day 24 - [RAW] Quitting Early
+      releaseDate: "2026-09-14"
 ---

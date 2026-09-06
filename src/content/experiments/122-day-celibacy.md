@@ -38,5 +38,9 @@ calendar:
       label: "4"
       title: Day 4
       note: The extra space is giving me clarity. I notice moments when my mind would fall back on an escape, to try to avoid stress and boredom.
+    "2026-09-05":
+      label: "5"
+      title: Day 5 - Lessons
+      note: I am suprised by how much I have been learning during these first days. My mind is calming down.
 ---
 
