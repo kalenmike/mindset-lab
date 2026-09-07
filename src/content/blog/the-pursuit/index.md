@@ -1,6 +1,6 @@
 ---
-title: The Pursuit
-description: "A 3,000 km Bikepacking adventure from London to Lisbon."
+title: "Pedal to Lisbon: 3,000 Kilometers from London to the Edge of Europe"
+description: "Quitting a corporate job, trading a car for a second-hand bicycle, and chasing an uncertain path across Europe on a 3,000-kilometer ride to the edge of the continent."
 date: "2018-02-22"
 tag: LAB
 order: 1
