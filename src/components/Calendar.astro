@@ -65,7 +65,7 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                 ))}
                 {monthWeeks(year, month)
                     .flat()
-                    .map((day, index) => {
+                    .map((day) => {
                         if (day === null) return <span class="h-12" />
                         const date = new Date(year, month, day)
                         if (!inRange(date)) return <span class="h-12 rounded-sm bg-slate-900/30" />
@@ -83,16 +83,15 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                         const tone = isToday
                             ? 'bg-slate-800 text-white ring-1 ring-slate-500'
                             : isFuture
-                                ? 'bg-slate-900/25 text-slate-600 opacity-60 hover:opacity-90'
+                                ? 'bg-slate-900/25 text-slate-600 opacity-60'
                                 : overdue
                                     ? 'border border-dashed border-slate-700 bg-slate-900/40'
                                     : 'bg-slate-900/60'
 
-                        return (
+                        return logged ? (
                             <button
                                 type="button"
                                 data-cal-day={iso}
-                                data-cal-logged={logged ? 'true' : 'false'}
                                 aria-label={`${formatDateLabel(date)} — open field log`}
                                 aria-current={isToday ? 'date' : undefined}
                                 class={`relative flex h-12 items-center justify-center rounded-sm p-1 text-[10px] transition-colors hover:bg-slate-800 hover:text-white ${tone}`}
@@ -119,6 +118,29 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                                     )}
                                 </span>
                             </button>
+                        ) : (
+                            <span class={`relative flex h-12 cursor-default items-center justify-center rounded-sm p-1 text-[10px] ${tone}`}>
+                                <span
+                                    class={`absolute right-1 top-0.5 text-[9px] font-bold leading-none ${isToday ? 'text-white' : 'text-slate-500'}`}
+                                >
+                                    {date.getDate()}
+                                </span>
+                                <span
+                                    class={
+                                        entry?.label
+                                            ? 'text-sm font-medium leading-none text-slate-300'
+                                            : 'text-sm leading-none text-slate-500'
+                                    }
+                                >
+                                    {entry?.label ?? dayIndex(date)}
+                                    {available && (
+                                        <span class="ml-0.5 text-[10px] text-slate-500">↗</span>
+                                    )}
+                                    {pending && (
+                                        <span class="ml-0.5 text-[10px] text-slate-600">◷</span>
+                                    )}
+                                </span>
+                            </span>
                         )
                     })}
             </div>
@@ -138,38 +160,31 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
     return cells.map((date) => {
         const iso = toISO(date)
         const entry = days[iso]
+        if (!entry) return null
         return (
             <template data-cal-panel={iso} data-label={formatDateLabel(date)}>
-                {entry ? (
-                    <>
-                        <p class="font-medium text-white">
-                            {entry.title ?? `Day ${dayIndex(date)}`}
-                        </p>
-                        {entry.note && (
-                            <pre class="mt-2 font-mono whitespace-pre-wrap text-slate-400">{entry.note}</pre>
-                        )}
-                        {entry.href ? (
-                            <a
-                                href={entry.href}
-                                target="_blank"
-                                rel="noreferrer"
-                                class="group mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-white"
-                            >
-                                <span class="text-slate-600 transition-transform group-hover:translate-x-1">
-                                    →
-                                </span>
-                                {entry.linkLabel ?? 'open related content'}
-                            </a>
-                        ) : entry.releaseDate ? (
-                            <p class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-                                video released on {' '}
-                                {formatDateLabel(toLocalDate(entry.releaseDate))}
-                            </p>
-                        ) : null}
-                    </>
-                ) : (
-                    <p class="text-slate-400">Day {dayIndex(date)} — no log yet.</p>
+                <p class="font-medium text-white">{entry.title ?? `Day ${dayIndex(date)}`}</p>
+                {entry.note && (
+                    <pre class="mt-2 font-mono whitespace-pre-wrap text-slate-400">{entry.note}</pre>
                 )}
+                {entry.href ? (
+                    <a
+                        href={entry.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="group mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-white"
+                    >
+                        <span class="text-slate-600 transition-transform group-hover:translate-x-1">
+                            →
+                        </span>
+                        {entry.linkLabel ?? 'open related content'}
+                    </a>
+                ) : entry.releaseDate ? (
+                    <p class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+                        video released on {' '}
+                        {formatDateLabel(toLocalDate(entry.releaseDate))}
+                    </p>
+                ) : null}
             </template>
         )
     })
@@ -226,22 +241,21 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
         const todayDate = new Date()
         const today = new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())
 
-        const stateClass = (iso: string, logged: boolean) => {
+        const stateClass = (iso: string) => {
             const [y, m, d] = iso.split('-').map(Number)
             const date = new Date(y, m - 1, d)
             if (date.getTime() === today.getTime()) return 'bg-slate-800 text-white ring-1 ring-slate-500'
-            if (date > today) return 'bg-slate-900/25 text-slate-600 opacity-60 hover:opacity-90'
-            return logged ? 'bg-slate-900/60' : 'border border-dashed border-slate-700 bg-slate-900/40'
+            if (date > today) return 'bg-slate-900/25 text-slate-600 opacity-60'
+            return 'bg-slate-900/60'
         }
 
         const applyState = () => {
             for (const cell of cells) {
                 const iso = cell.getAttribute('data-cal-day') ?? ''
-                const logged = cell.getAttribute('data-cal-logged') === 'true'
-                const isToday = stateClass(iso, logged).includes('ring-1')
+                const isToday = stateClass(iso).includes('ring-1')
                 cell.className =
                     'relative flex h-12 items-center justify-center rounded-sm p-1 text-[10px] transition-colors hover:bg-slate-800 hover:text-white ' +
-                    stateClass(iso, logged)
+                    stateClass(iso)
                 if (isToday) cell.setAttribute('aria-current', 'date')
                 else cell.removeAttribute('aria-current')
                 const dateNum = cell.querySelector<HTMLElement>('[data-cal-date-num]')

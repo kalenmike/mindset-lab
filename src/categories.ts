@@ -17,17 +17,17 @@ export type ResourceTag = {
 export const CATEGORIES: Record<CategoryId, Category> = {
     RAW: {
         name: 'RAW',
-        desc: 'How I think. The public diary of the rebuild. Wins, losses, behind-the-scenes friction, and raw vulnerability as I log what it actually costs to earn back self-trust from zero.',
+        desc: 'The crude operational log. Behind-the-scenes friction, execution data, and the real-time cost of maintaining self-trust under load.',
         color: 'text-sky-400',
     },
     LAB: {
         name: 'LAB',
-        desc: 'How I Test. Self-trust experiments run in public. Pushing past comfort zones and testing discipline through brutal challenges to see what happens when you commit every week.',
+        desc: 'Where discipline meets stress-testing. Structured challenges designed to push mindset and endurance, measuring what happens when commitment is forced under pressure.',
         color: 'text-violet-400',
     },
     TOOLKIT: {
         name: 'TOOLKIT',
-        desc: "What Works. Frameworks, routines, and data extracted from the experiments. No theory, just tools and systems captured as they prove themselves in the field. Hard proof over quick fixes.",
+        desc: "Battle-tested frameworks and systems extracted from the field. No abstract theory, just operational routines and data captured as they prove themselves in the real world.",
         color: 'text-amber-400',
     },
 }

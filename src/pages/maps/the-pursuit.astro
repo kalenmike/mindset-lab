@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { loadPursuitMap } from '../../lib/pursuit-map'
+
+const points = loadPursuitMap('src/content/blog/the-pursuit/the-pursuit-map.kmz')
+const camping = points.filter((p) => p.group === 'Night Camping')
+const indoors = points.filter((p) => p.group === 'Night Spent Indoors')
+const json = JSON.stringify(points)
+const CAMPING_COLOR = '#4ade80'
+const INDOORS_COLOR = '#a78bfa'
+const TENT_ICON = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 20h18M6 20L12 5l6 15M12 5v15" />
+    </svg>`
+const HOUSE_ICON = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11l9-7 9 7M5 9.5V21h14V9.5M9 21v-6h6v6" />
+    </svg>`
+---
+
+<Layout title="The Pursuit Route Map // Mindset Lab">
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <p class="mb-6 text-xs text-slate-600">the pursuit</p>
+        <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
+            THE ROUTE MAP
+        </h1>
+        <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">
+            London to Lisbon on a bicycle. Every night stop logged — where I camped
+            and where I found a roof. Locations are approximations.
+        </p>
+        <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">As the days passed I found myself less keen to be outdoors.</p>
+        <div class="mt-6 text-xs text-slate-600">
+            {points.length} total stops — {camping.length} camping, {indoors.length} indoors.
+        </div>
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Map
+        </h2>
+        <div id="pursuit-map" class="mt-6 h-[70vh] w-full border border-slate-800/70" />
+        <div class="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-xs text-slate-500">
+            <span class="inline-flex items-center gap-2">
+                <span class="pursuit-map-pin-icon text-green-400" set:html={TENT_ICON} />
+                Night camping
+            </span>
+            <span class="inline-flex items-center gap-2">
+                <span class="pursuit-map-pin-icon text-violet-400" set:html={HOUSE_ICON} />
+                Night indoors
+            </span>
+            <span class="inline-flex items-center gap-2">
+                <span class="h-0.5 w-6 border-t-2 border-dashed border-red-400" />
+                Route
+            </span>
+        </div>
+        <p class="mt-4 text-xs text-slate-600">
+            ctrl + scroll to zoom. Click a marker for the night number and any notes.
+        </p>
+    </section>
+</Layout>
+
+<script type="application/json" id="pursuit-map-data" set:html={json} />
+
+<script>
+    import 'leaflet/dist/leaflet.css'
+    import L from 'leaflet'
+
+    const container = document.getElementById('pursuit-map')
+    const dataEl = document.getElementById('pursuit-map-data')
+
+    if (container && dataEl) {
+        const points: Array<{ group: string; label: string; note?: string; night: number; lat: number; lon: number }> =
+            JSON.parse(dataEl.textContent ?? '[]')
+
+        const map = L.map(container, { scrollWheelZoom: false })
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(map)
+
+        const styles: Record<string, { color: string; icon: string }> = {
+            'Night Camping': { color: '#4ade80', icon: 'tent' },
+            'Night Spent Indoors': { color: '#a78bfa', icon: 'house' },
+        }
+
+        const tentIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 20h18M6 20L12 5l6 15M12 5v15" />
+            </svg>`
+        const houseIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11l9-7 9 7M5 9.5V21h14V9.5M9 21v-6h6v6" />
+            </svg>`
+
+        const makeIcon = (color: string, icon: string) =>
+            L.divIcon({
+                className: 'pursuit-map-pin',
+                html: `<span class="pursuit-map-pin-icon" style="color:${color}">${
+                    icon === 'tent' ? tentIcon : houseIcon
+                }</span>`,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12],
+                popupAnchor: [0, -12],
+            })
+
+        const ordered = [...points].sort((a, b) => a.night - b.night)
+
+        const route = ordered.map((p) => [p.lat, p.lon] as [number, number])
+        if (route.length > 1) {
+            L.polyline(route, {
+                color: '#f87171',
+                weight: 2,
+                dashArray: '8 8',
+                opacity: 0.9,
+            }).addTo(map)
+        }
+
+        const bounds = L.latLngBounds([])
+        for (const p of points) {
+            const style = styles[p.group] ?? { color: '#94a3b8', icon: 'tent' }
+            const marker = L.marker([p.lat, p.lon], { icon: makeIcon(style.color, style.icon) }).addTo(map)
+            const note = p.note ? `<br/>${p.note}` : ''
+            marker.bindPopup(`<strong>${p.label}</strong>${note}`)
+            bounds.extend([p.lat, p.lon])
+        }
+
+        if (points.length > 0) map.fitBounds(bounds, { padding: [24, 24] })
+        else map.setView([45, 0], 5)
+
+        container.addEventListener(
+            'wheel',
+            (event) => {
+                if (event.ctrlKey) {
+                    map.scrollWheelZoom.enable()
+                } else {
+                    map.scrollWheelZoom.disable()
+                }
+            },
+            { capture: true },
+        )
+    }
+</script>

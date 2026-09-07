@@ -40,6 +40,13 @@ Pages (`src/pages/`):
 - `vault/index.astro` — `/vault` resources
 - `experiment/[slug].astro` — `/experiment/{slug}` pages via `getStaticPaths`
   (filters out `status: HIDDEN` experiments)
+- `blog/index.astro` — `/blog` (unlisted) blog index; grouped by blog folder
+- `blog/[name]/index.astro` — `/blog/{name}` (unlisted) single-blog meta + articles
+- `blog/[name]/[slug].astro` — `/blog/{name}/{slug}` (unlisted) rendered article page
+
+The blog section is **standalone-only**: `/blog` is not linked from the nav `MENU` or
+anywhere on the main site — pages are reachable only by direct URL (they stay in
+`sitemap.xml` and are indexable).
 
 `astro.config.mjs` sets `site: 'https://kalenmichael.com'` (the CNAME custom domain),
 `output: 'static'`, and `base` is unset — **all internal links are absolute root paths**
@@ -113,6 +120,7 @@ Three collections:
 - **`experiments`** — `src/content/experiments/{slug}.md`; the filename is the slug.
 - **`notes`** — `src/content/notes/*.md`, ordered by `no`.
 - **`resources`** — `src/content/resources/*.md`, ordered by `no`.
+- **`blogs`** — `src/content/blog/{name}/*.md`; folder-nested blogs (see below).
 
 ### Experiment frontmatter fields
 
@@ -140,9 +148,10 @@ calendar: { start: "YYYY-MM-DD", end: "YYYY-MM-DD", days: { "YYYY-MM-DD": { labe
   cell slot), a `title`, a `note` (shown in the day modal), an `href` + `linkLabel` for
   published related content (renders a link in the modal and a `↗` cell marker), and a
   `releaseDate` for content that is still in the pipeline (renders "not released yet —
-  expected <date>" in the modal and a `~` cell marker). Days without an entry still render
-  with a `d{n}` slot and a "no log yet" modal. Release dates are independent of challenge
-  dates — the calendar is always for the challenge period.
+  expected <date>" in the modal and a `~` cell marker). Days without an entry render
+  non-interactively (a plain `<span>`, no hover, no click, no modal) with a `d{n}` slot.
+  Release dates are independent of challenge dates — the calendar is always for the
+  challenge period.
 - The calendar is the shared component `src/components/Calendar.astro`: the month grid is
   rendered statically at build time; only the day modal is driven by its bundled module
   script (click opens, Prev/Next navigate, Escape/backdrop/[close] dismiss). Markup is
@@ -169,6 +178,91 @@ no (e.g. "001"), date (YYYY-MM-DD), tag (RAW|LAB|TOOLKIT), title, desc?, href
 ```
 no (e.g. "R-01"), tag (DOWNLOAD|TOOLKIT|READING), title, desc, href
 ```
+
+### Blog (`blogs`) collection — folder-nested blogs
+
+Each blog is a **folder** under `src/content/blog/{name}/`. A blog folder contains one
+`index.md` (the blog's metadata) plus any number of article `.md` or `.mdx` files. The page
+URLs are folder-derived: `/blog`, `/blog/{name}/`, `/blog/{name}/{article-slug}/`. The
+folder is the blog slug — never duplicate it in frontmatter.
+
+- `index.md` — **blog meta** (folder frontmatter): `title`, `description?`, `tag?`
+  (RAW|LAB|TOOLKIT), `order?` (controls blog ordering on `/blog`). Its markdown body, if
+  present, renders as the intro on `/blog/{name}/`, wrapped in `.blog-content` so it gets the
+  same article typography and spacing.
+- `{article-slug}.md` / `{article-slug}.mdx` — **article**: `title`, `date?`
+  (YYYY-MM-DD), `description?`, `tag?`, `order?`. The body renders on
+  `/blog/{name}/{article-slug}/` via `render(entry)` from `astro:content`, styled by the
+  `.blog-content` block in `src/styles/global.css`. Use **MDX** (`.mdx`) only when the
+  article needs an inline component (see Comments below).
+
+Shared schema (`src/content.config.ts` `blogs` collection): `title`, `description?`, `tag?`,
+`order?`, `date?`, `thumbnail?` (image) — role (blog vs article) is inferred from the entry
+id: Astro's glob loader normalizes a folder's `index.md` to the bare folder name (id has
+**no slash**, e.g. `the-pursuit` = blog meta), so an id **with** a slash is an article
+(`name/slug`, slug = id's last segment). The loader pattern is `**/*.{md,mdx}` (requires the
+`@astrojs/mdx` integration in `astro.config.mjs` — pinned to `7.0.x`, not 8, to match Astro
+7's `markdown-satteri`).
+
+- `thumbnail` uses the content-schema `image()` helper: set it to a **relative path** from
+  the content file (e.g. `thumbnail: ./images/d1-kalen-and-davin.jpg`). It validates the
+  path, resolves it to `ImageMetadata`, and Astro optimizes it at build (WebP crop). On
+  `/blog` the thumbnail renders as a captionless `Polaroid` print — the shared
+  `src/components/Polaroid.astro` component with `width`/`height`/`fit="cover"` (640×360,
+  16:9 crop, same `polaroid-print` frame as in articles). It is optional; omit it and the
+  row renders without an image.
+
+Note: rendered blog article/intro markdown is the first inline-rendered content on the site
+(the other collections link out via `href`). Style it with the `.blog-content` rules — keep
+color tokens, don't hardcode hex.
+
+### Blog images (local, auto-optimized)
+
+Blog articles can embed **local images** that Astro optimizes at build time (WebP output,
+sized + `width`/`height` inferred, emitted to `dist/_astro/`). No config or schema change is
+needed — the markdown processor resolves relative image paths in article bodies automatically.
+Requires the **`sharp`** image service (a devDependency — `pnpm add -D sharp`) to run the
+`pnpm build` optimization step; `pnpm dev` renders unoptimized images without it.
+
+- Drop images in a per-blog `images/` subfolder:
+  `src/content/blog/{name}/images/{file}.{jpg|png|webp|gif|avif|svg}`.
+- Reference them in the article body with a **relative path** (no leading slash, no
+  `/blog/...` prefix): `![alt](./images/d1-kalen-and-davin.jpg)`. Resolved relative to the
+  article `.md` file.
+- Images must live under `src/` (inside the collection folder tree), **not** `public/` —
+  `public/` images are served verbatim, never optimized.
+- Remote URLs (`![alt](https://...)`) stay as plain unoptimized `<img>` tags.
+- The `blogs` glob only matches `**/*.{md,mdx}`, so image files in the folder are never treated
+  as content entries.
+- Layout: `.blog-content img` in `src/styles/global.css` (max-width 100%, height auto,
+  1px `--line` border). Any image change still requires a rebuild.
+
+### Polaroid photos (MDX, annotated)
+
+A **Polaroid** (photo print + annotation caption) is available via the shared
+`src/components/Polaroid.astro` component. It wraps an imported image in a white print frame
+with a mono-font caption, rendered server-side (no JS). It uses `astro:assets` `<Image>`, so
+the photo stays fully optimized (WebP, `/_astro/` output) just like markdown images.
+
+- Requires an **`.mdx`** article (`.md` cannot embed components) and one import per photo:
+  ```mdx
+  import Polaroid from '../../../components/Polaroid.astro'
+  import d1 from './images/d1-kalen-and-davin.jpg'
+
+  <Polaroid image={d1} caption="Kalen and Davin getting some lunch." />
+  ```
+- Props: `image` (the imported `ImageMetadata`), `alt?` (falls back to `caption`),
+  `caption?` (the annotation text), `emptyCaption?` (reserves the caption space with an
+  empty `figcaption` — used for captionless prints so the frame doesn't cut off), plus
+  optional `width`/`height`/`fit` to pass to `astro:assets` `<Image>` (used for cropped
+  thumbnails). Caption is optional — the print still renders.
+- Styling: off-white print via the constant `--polaroid-bg`/`--polaroid-ink`/`--polaroid-border`
+  tokens in `src/styles/global.css` (deliberately **not** theme-flipping — a photo print stays
+  paper-white in dark and light), a soft drop shadow, and no tilt. Frame styles are scoped in
+  `Polaroid.astro` — keep them token-based, no hardcoded hex.
+- Note: raw HTML `<img src="./images/...">` in an article body is **not** supported — it
+  bypasses the markdown image pipeline, so it is neither optimized nor path-resolved. Use
+  `![]()` syntax or the `Polaroid` component instead.
 
 ### Tag system (single source of truth in `src/categories.ts`)
 

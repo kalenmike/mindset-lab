@@ -1,0 +1,148 @@
+---
+import { getCollection, render } from 'astro:content'
+import Layout from '../../../layouts/Layout.astro'
+import MoveLeftIcon from '../../../components/MoveLeftIcon.astro'
+import Polaroid from '../../../components/Polaroid.astro'
+import { CATEGORIES, type CategoryId } from '../../../categories'
+
+export async function getStaticPaths() {
+    const entries = await getCollection('blogs')
+    const blogNames = entries
+        .filter((entry) => !entry.id.includes('/'))
+        .map((entry) => entry.id)
+    return [...new Set(blogNames)].map((name) => ({ params: { name } }))
+}
+
+const { name } = Astro.params
+
+const entries = await getCollection('blogs')
+const metaEntry = entries.find((entry) => !entry.id.includes('/') && entry.id === name)
+const blog = metaEntry?.data
+
+const articles = entries
+    .filter((entry) => entry.id.includes('/') && entry.id.startsWith(`${name}/`))
+    .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0) || (a.data.date ?? '').localeCompare(b.data.date ?? ''))
+    .map((entry) => ({
+        slug: entry.id.replace(`${name}/`, ''),
+        data: entry.data,
+    }))
+
+let Intro = null
+if (metaEntry) {
+    const rendered = await render(metaEntry)
+    Intro = rendered.Content
+}
+
+const category = blog?.tag
+    ? (CATEGORIES[blog.tag as CategoryId] ?? { name: blog.tag, color: 'text-slate-400' })
+    : null
+---
+
+<Layout title={`${blog?.title ?? name} // Mindset Lab`}>
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <a href="/blog" class="text-xs font-bold uppercase tracking-[0.2em] text-slate-600 transition-colors hover:text-white">
+            ← all blogs
+        </a>
+
+        <p class="mb-6 mt-8 text-xs text-slate-600">{name}</p>
+        <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
+            {blog?.title ?? name}
+        </h1>
+
+        {blog?.description && (
+            <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">{blog.description}</p>
+        )}
+        {
+            blog?.thumbnail && (
+                <div class="mt-6 w-full max-w-md">
+                    <Polaroid
+                        image={blog.thumbnail}
+                        alt={blog.title}
+                        width={640}
+                        height={360}
+                        fit="cover"
+                        emptyCaption
+                    />
+                </div>
+            )
+        }
+        <div class="mt-4 flex items-baseline gap-4 text-xs">
+            {category && (
+                <span class={`font-bold uppercase tracking-wider ${category.color}`}>
+                    [{category.name}]
+                </span>
+            )}
+            <span class="text-slate-600">
+                {articles.length} {articles.length === 1 ? 'article' : 'articles'}
+            </span>
+        </div>
+        {Intro && (
+            <div class="blog-content mt-8 max-w-xl">
+                <Intro />
+            </div>
+        )}
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Articles
+        </h2>
+        <div class="mt-6">
+            {articles.map((article) => {
+                const articleCategory = article.data.tag
+                    ? (CATEGORIES[article.data.tag as CategoryId] ?? {
+                          name: article.data.tag,
+                          color: 'text-slate-400',
+                      })
+                    : null
+                return (
+                    <a
+                        href={`/blog/${name}/${article.slug}/`}
+                        class="group flex flex-col gap-4 border-b border-slate-800/70 py-5 sm:flex-row sm:items-center"
+                    >
+                        {
+                            article.data.thumbnail && (
+                                <div class="w-44 shrink-0 sm:w-48">
+                                    <Polaroid
+                                        image={article.data.thumbnail}
+                                        alt={article.data.title}
+                                        width={185}
+                                        height={104}
+                                        fit="cover"
+                                        compact
+                                        emptyCaption
+                                    />
+                                </div>
+                            )
+                        }
+                        <div class="flex flex-1 flex-col gap-2">
+                            <div class="flex items-baseline gap-4 text-sm">
+                                {article.data.date && (
+                                    <span class="text-xs text-slate-500">{article.data.date}</span>
+                                )}
+                                {articleCategory && (
+                                    <span
+                                        class={`text-xs font-bold uppercase tracking-wider ${articleCategory.color}`}
+                                    >
+                                        [{articleCategory.name}]
+                                    </span>
+                                )}
+                            </div>
+                            <span class="flex items-center gap-2 font-medium">
+                                <span class="text-white transition-colors group-hover:text-slate-300">
+                                    {article.data.title}
+                                </span>
+                                <MoveLeftIcon />
+                            </span>
+                            {article.data.description && (
+                                <span class="text-sm leading-relaxed text-slate-500">
+                                    {article.data.description}
+                                </span>
+                            )}
+                        </div>
+                    </a>
+                )
+            })}
+        </div>
+    </section>
+</Layout>

@@ -42,5 +42,13 @@ calendar:
       label: "5"
       title: Day 5 - Lessons
       note: I am suprised by how much I have been learning during these first days. My mind is calming down.
+    "2026-09-06":
+      label: "6"
+      title: Day 6
+      note: It was a long day, not much more to note.
+    "2026-09-07":
+      label: "7"
+      title: Day 7
+      note: I was thinking today that it could be helpful to do a talk with a monk about desire.
 ---
 

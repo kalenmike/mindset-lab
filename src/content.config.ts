@@ -60,4 +60,17 @@ const resources = defineCollection({
     }),
 })
 
-export const collections = { experiments, notes, resources }
+const blogs = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+    schema: ({ image }) =>
+        z.object({
+            title: z.string(),
+            description: z.string().optional(),
+            tag: z.enum(['RAW', 'LAB', 'TOOLKIT']).optional(),
+            order: z.number().optional(),
+            date: z.string().optional(),
+            thumbnail: image().optional(),
+        }),
+})
+
+export const collections = { experiments, notes, resources, blogs }

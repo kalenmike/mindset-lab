@@ -110,11 +110,13 @@ calendar:
     "2026-08-28":
       label: "16"
       title: Day 16 - [RAW] My life in 60 seconds
-      releaseDate: "2026-09-06"
+      href: https://www.instagram.com/p/Dc9CgqUM6Is/
+      linkLabel: watch the reel
     "2026-08-29":
       label: "17"
       title: Day 17 - [RAW] Somewhere we lost the way
-      releaseDate: "2026-09-07"
+      href: https://www.instagram.com/p/Dc_qRqesDRo/
+      linkLabel: watch the reel
     "2026-08-30":
       label: "18"
       title: Day 18 - [LAB] Running today really showed this
@@ -146,4 +148,8 @@ calendar:
       label: "24"
       title: Day 24 - [RAW] Quitting Early
       releaseDate: "2026-09-14"
+    "2026-09-06":
+      label: "25"
+      title: Day 25 - [RAW] The Odessy
+      releaseDate: "2026-09-15"
 ---

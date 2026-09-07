@@ -46,6 +46,9 @@ A PUBLIC LOG OF <span class="font-normal text-slate-600">SELF-TRUST </span>EXPER
         <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
             <span class="text-slate-700">##</span> Core Pillars
         </h2>
+        <p class="mt-4 text-sm leading-relaxed text-slate-500">
+            Entries are tagged by pillar. Filter to track operational friction, study active experiments, or deploy proven systems.
+        </p>
         <div class="mt-6">
             {PILLARS.map((pillar) => {
                 const category = CATEGORIES[pillar.id]
@@ -66,10 +69,10 @@ A PUBLIC LOG OF <span class="font-normal text-slate-600">SELF-TRUST </span>EXPER
 
     <section id="experiments" class="border-b border-dashed border-slate-800 py-10">
         <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
-            <span class="text-slate-700">##</span> In the Lab
+            <span class="text-slate-700">##</span><span class={`${CATEGORIES.LAB.color}`}> In the LAB</span>
         </h2>
         <p class="mt-4 text-sm leading-relaxed text-slate-500">
-            Featured self-trust experiments.
+            Featured experiments.
         </p>
         <div class="mt-6">
             {experiments.map((experiment) => (
@@ -79,6 +82,7 @@ A PUBLIC LOG OF <span class="font-normal text-slate-600">SELF-TRUST </span>EXPER
                     subtitle={experiment.subtitle}
                     tagline={experiment.tagline}
                     status={experiment.status}
+                    start={experiment.start}
                     duration={experiment.duration}
                     tag={experiment.tag}
                 />

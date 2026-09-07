@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from 'astro:content'
+import Layout from '../../../layouts/Layout.astro'
+import { CATEGORIES, type CategoryId } from '../../../categories'
+
+export async function getStaticPaths() {
+    const entries = await getCollection('blogs')
+    return entries
+        .filter((entry) => entry.id.includes('/'))
+        .map((entry) => {
+            const [name, slug] = entry.id.split('/')
+            return { params: { name, slug }, props: { entry } }
+        })
+}
+
+const { entry } = Astro.props
+const article = entry.data
+const name = entry.id.split('/')[0]
+const { Content } = await render(entry)
+
+const category = article.tag
+    ? (CATEGORIES[article.tag as CategoryId] ?? { name: article.tag, color: 'text-slate-400' })
+    : null
+---
+
+<Layout title={`${article.title} // Mindset Lab`}>
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <a
+            href={`/blog/${name}/`}
+            class="text-xs font-bold uppercase tracking-[0.2em] text-slate-600 transition-colors hover:text-white"
+        >
+            ← {name}
+        </a>
+        <p class="mb-6 mt-8 flex items-baseline gap-4 text-xs">
+            {article.date && <span class="text-slate-600">{article.date}</span>}
+            {category && (
+                <span class={`font-bold uppercase tracking-wider ${category.color}`}>
+                    [{category.name}]
+                </span>
+            )}
+        </p>
+        <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
+            {article.title}
+        </h1>
+        {article.description && (
+            <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-400">
+                {article.description}
+            </p>
+        )}
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <article class="blog-content max-w-xl">
+            <Content />
+        </article>
+    </section>
+</Layout>

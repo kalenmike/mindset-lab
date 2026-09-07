@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+    image: ImageMetadata
+    alt?: string
+    caption?: string
+    emptyCaption?: boolean
+    compact?: boolean
+    width?: number
+    height?: number
+    fit?: 'cover' | 'contain' | 'fill' | 'inside' | 'outside'
+}
+
+const { image, alt, caption, emptyCaption, compact, width, height, fit } = Astro.props
+---
+
+<figure class="polaroid">
+    <div class={`polaroid-print ${compact ? 'polaroid-print--compact' : ''}`}>
+        <Image
+            src={image}
+            alt={alt ?? caption ?? ''}
+            class="polaroid-img"
+            width={width}
+            height={height}
+            fit={fit}
+        />
+        {
+            (caption || emptyCaption) && (
+                <figcaption class="polaroid-caption">{caption}</figcaption>
+            )
+        }
+    </div>
+</figure>
+
+<style>
+    .polaroid-print {
+        display: inline-block;
+        max-width: 100%;
+        background-color: var(--polaroid-bg);
+        color: var(--polaroid-ink);
+        border: 1px solid var(--polaroid-border);
+        padding: 10px 10px 0;
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.18);
+    }
+
+    .polaroid-print--compact {
+        padding: 4px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .polaroid-print--compact .polaroid-caption {
+        padding: 2px 2px 4px;
+        font-size: 0;
+        line-height: 0;
+    }
+
+    .polaroid-print--compact .polaroid-caption:not(:empty) {
+        font-size: 0.75rem;
+        line-height: 1.4;
+        padding: 4px 2px 6px;
+    }
+
+    .polaroid-img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .polaroid-caption {
+        padding: 12px 4px 16px;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1.4;
+        text-align: center;
+        letter-spacing: 0.02em;
+        color: var(--polaroid-ink);
+        opacity: 0.7;
+    }
+</style>
