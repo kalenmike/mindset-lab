@@ -1,5 +1,4 @@
 ---
-import { CATEGORIES, type CategoryId } from '../categories'
 import MoveLeftIcon from './MoveLeftIcon.astro'
 import Status from './Status.astro'
 
@@ -11,15 +10,9 @@ interface Props {
     status: string
     start: string
     duration: string
-    tag: string
 }
 
-const { slug, title, subtitle, tagline, status, start, duration, tag } = Astro.props
-const category = CATEGORIES[tag as CategoryId] ?? {
-    name: tag,
-    desc: '',
-    color: 'text-slate-400',
-}
+const { slug, title, subtitle, tagline, status, start, duration } = Astro.props
 ---
 
 <a href={`/experiment/${slug}/`} class="group flex flex-col gap-2 border-b border-slate-800/70 py-5">

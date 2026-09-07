@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import { CATEGORIES, type CategoryId } from '../../categories'
+import { CATEGORIES } from '../../categories'
 import ExperimentRow from '../../components/ExperimentRow.astro'
 import Layout from '../../layouts/Layout.astro'
 
@@ -40,7 +40,6 @@ const experiments = (await getCollection('experiments'))
                     status={experiment.status}
                     start={experiment.start}
                     duration={experiment.duration}
-                    tag={experiment.tag}
                 />
             ))}
         </div>

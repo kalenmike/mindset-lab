@@ -6,8 +6,6 @@ const points = loadPursuitMap('src/content/blog/the-pursuit/the-pursuit-map.kmz'
 const camping = points.filter((p) => p.group === 'Night Camping')
 const indoors = points.filter((p) => p.group === 'Night Spent Indoors')
 const json = JSON.stringify(points)
-const CAMPING_COLOR = '#4ade80'
-const INDOORS_COLOR = '#a78bfa'
 const TENT_ICON = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 20h18M6 20L12 5l6 15M12 5v15" />
@@ -59,7 +57,7 @@ const HOUSE_ICON = `
     </section>
 </Layout>
 
-<script type="application/json" id="pursuit-map-data" set:html={json} />
+<script is:inline type="application/json" id="pursuit-map-data" set:html={json} />
 
 <script>
     import 'leaflet/dist/leaflet.css'
