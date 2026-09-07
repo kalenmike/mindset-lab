@@ -256,9 +256,9 @@ the photo stays fully optimized (WebP, `/_astro/` output) just like markdown ima
   empty `figcaption` — used for captionless prints so the frame doesn't cut off), plus
   optional `width`/`height`/`fit` to pass to `astro:assets` `<Image>` (used for cropped
   thumbnails). Caption is optional — the print still renders.
-- Styling: off-white print via the constant `--polaroid-bg`/`--polaroid-ink`/`--polaroid-border`
-  tokens in `src/styles/global.css` (deliberately **not** theme-flipping — a photo print stays
-  paper-white in dark and light), a soft drop shadow, and no tilt. Frame styles are scoped in
+- Styling: print via the theme-flipping `--polaroid-bg`/`--polaroid-ink`/`--polaroid-border`
+  tokens in `src/styles/global.css` (black print + light ink in dark mode, white print + dark
+  ink in light mode), a soft drop shadow, and no tilt. Frame styles are scoped in
   `Polaroid.astro` — keep them token-based, no hardcoded hex.
 - Note: raw HTML `<img src="./images/...">` in an article body is **not** supported — it
   bypasses the markdown image pipeline, so it is neither optimized nor path-resolved. Use

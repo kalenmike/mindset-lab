@@ -33,9 +33,9 @@
   --status-live: #ef4444;
   --status-complete: #4ade80;
 
-  --polaroid-bg: #f1f5f9;
-  --polaroid-ink: #1e293b;
-  --polaroid-border: #cbd5e1;
+  --polaroid-bg: #0f172a;
+  --polaroid-ink: #cbd5e1;
+  --polaroid-border: #1e293b;
 
   --parchment-100: #1e293b;
   --parchment-200: #334155;
@@ -63,6 +63,10 @@ html.light {
   --accent-amber: #d97706;
   --status-live: #dc2626;
   --status-complete: #16a34a;
+
+  --polaroid-bg: #f1f5f9;
+  --polaroid-ink: #1e293b;
+  --polaroid-border: #cbd5e1;
 
   --parchment-100: #e2e8f0;
   --parchment-200: #cbd5e1;
