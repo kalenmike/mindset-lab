@@ -44,7 +44,7 @@ const category = blog?.tag
             ← all blogs
         </a>
 
-        <p class="mb-6 mt-8 text-xs text-slate-600">{name}</p>
+        <p class="mb-6 mt-8 text-xs text-slate-600">{blog?.date ?? name}</p>
         <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
             {blog?.title ?? name}
         </h1>

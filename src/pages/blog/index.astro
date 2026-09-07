@@ -16,7 +16,7 @@ const blogs = entries
         ).length
         return { name, data: entry.data, articleCount }
     })
-    .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+    .sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''))
 ---
 
 <Layout title="Blog // Mindset Lab">
@@ -63,7 +63,9 @@ const blogs = entries
                         }
                         <div class="flex flex-1 flex-col gap-2">
                             <div class="flex items-baseline gap-4 text-sm">
-                                <span class="text-slate-500">{blog.name}</span>
+                                {blog.data.date && (
+                                    <span class="text-slate-500">{blog.data.date}</span>
+                                )}
                                 {blog.data.tag && (
                                     <span
                                         class={`text-xs font-bold uppercase tracking-wider ${category.color}`}

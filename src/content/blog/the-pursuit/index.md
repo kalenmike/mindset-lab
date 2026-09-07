@@ -1,6 +1,7 @@
 ---
 title: The Pursuit
 description: "A 3,000 km Bikepacking adventure from London to Lisbon."
+date: "2018-02-22"
 tag: LAB
 order: 1
 thumbnail: ./images/d1-kalen-and-davin.jpg
