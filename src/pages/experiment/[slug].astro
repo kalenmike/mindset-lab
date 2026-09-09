@@ -38,6 +38,10 @@ const notes = (await getCollection('notes'))
     .map((entry) => entry.data)
     .filter((note) => note.experiment === entry.id)
     .sort((a, b) => a.date.localeCompare(b.date))
+
+const linkedBlogs = (await getCollection('blogs'))
+    .filter((blog) => !blog.id.includes('/') && blog.data.experiment === entry.id)
+    .map((blog) => ({ name: blog.id, data: blog.data }))
 ---
 
 <Layout title={`${experiment.title} | The Kalen Michael Experiment`}>
@@ -63,17 +67,19 @@ const notes = (await getCollection('notes'))
                         : '[ IN PROGRESS ]'}
                 </p>
             ) : (
-                <a
-                    href={experiment.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    class="mt-10 group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
-                >
-                    <span class="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
-                        →
-                    </span>
-                    Read the write-up on Substack
-                </a>
+                experiment.href && (
+                    <a
+                        href={experiment.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="mt-10 group inline-flex items-center gap-3 border border-slate-700 px-5 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-slate-100 hover:bg-slate-100 hover:text-slate-950"
+                    >
+                        <span class="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-slate-950">
+                            →
+                        </span>
+                        Read the write-up on Substack
+                    </a>
+                )
             )
         }
     </section>
@@ -148,8 +154,48 @@ const notes = (await getCollection('notes'))
             <span class="text-slate-700">##</span> Field Notes
         </h2>
         {
-            notes.length > 0 ? (
+            notes.length > 0 || linkedBlogs.length > 0 ? (
                 <div class="mt-6">
+                    {linkedBlogs.map((blog) => {
+                        const blogCategory = CATEGORIES[blog.data.tag as CategoryId] ?? {
+                            name: blog.data.tag,
+                            desc: '',
+                            color: 'text-slate-400',
+                        }
+                        return (
+                            <a
+                                href={`/blog/${blog.name}/`}
+                                class="group flex flex-col gap-2 border-b border-slate-800/70 py-5"
+                            >
+                                <div class="flex items-baseline gap-4 text-sm">
+                                    <span class="text-xs font-bold tracking-wider text-slate-600">
+                                        BLOG
+                                    </span>
+                                    {blog.data.finished && (
+                                        <span class="text-xs text-slate-500">{blog.data.finished}</span>
+                                    )}
+                                    {blog.data.tag && (
+                                        <span
+                                            class={`text-xs font-bold uppercase tracking-wider ${blogCategory.color}`}
+                                        >
+                                            [{blogCategory.name}]
+                                        </span>
+                                    )}
+                                </div>
+                                <span class="flex items-center gap-2 font-medium">
+                                    <span class="text-white transition-colors group-hover:text-slate-300">
+                                        {blog.data.title}
+                                    </span>
+                                    <MoveLeftIcon />
+                                </span>
+                                {blog.data.description && (
+                                    <span class="text-sm leading-relaxed text-slate-500">
+                                        {blog.data.description}
+                                    </span>
+                                )}
+                            </a>
+                        )
+                    })}
                     {notes.map((note) => {
                         const noteCategory = CATEGORIES[note.tag as CategoryId] ?? {
                             name: note.tag,

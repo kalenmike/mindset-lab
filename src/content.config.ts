@@ -70,6 +70,7 @@ const blogs = defineCollection({
             order: z.number().optional(),
             date: z.string().optional(),
             finished: z.string().optional(),
+            experiment: z.string().optional(),
             thumbnail: image().optional(),
         }),
 })

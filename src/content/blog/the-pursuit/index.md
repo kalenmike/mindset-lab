@@ -5,6 +5,7 @@ finished: "2018-02-22"
 tag: RAW
 order: 1
 thumbnail: ./images/d1-kalen-and-davin.jpg
+experiment: "83-day-bicycle-pursuit"
 ---
 
 ## Hola! I am Kalen and this is my ~excuse to travel~ pursuit of **happiness, meaning and purpose.**

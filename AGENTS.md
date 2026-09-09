@@ -188,7 +188,9 @@ folder is the blog slug — never duplicate it in frontmatter.
 
 - `index.md` — **blog meta** (folder frontmatter): `title`, `description?`, `tag?`
   (RAW|LAB|TOOLKIT), `order?`, `finished?` (YYYY-MM-DD; present = blog closed, absent =
-  open). Its markdown body, if present, renders as the intro on `/blog/{name}/`, wrapped in
+  open), `experiment?` (slug of a linked experiment — the blog then appears in that
+  experiment page's `## Field Notes` section). Its markdown body, if present, renders as
+  the intro on `/blog/{name}/`, wrapped in
   `.blog-content` so it gets the same article typography and spacing.
 - `{article-slug}.md` / `{article-slug}.mdx` — **article**: `title`, `date?`
   (YYYY-MM-DD or `YYYY-MM-DD HH:MM` for precision — both accepted and parsed by
