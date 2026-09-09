@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content'
+import { getImage } from 'astro:assets'
 import Layout from '../../../layouts/Layout.astro'
 import Polaroid from '../../../components/Polaroid.astro'
 import { CATEGORIES, type CategoryId } from '../../../categories'
@@ -23,9 +24,21 @@ const { Content } = await render(entry)
 const category = article.tag
     ? (CATEGORIES[article.tag as CategoryId] ?? { name: article.tag, color: 'text-slate-400' })
     : null
+
+const ogImage = article.thumbnail
+    ? new URL(
+          (await getImage({ src: article.thumbnail, width: 640, height: 360, fit: 'cover' })).src,
+          Astro.site ?? Astro.url.origin
+      ).toString()
+    : undefined
 ---
 
-<Layout title={`${article.title} | The Kalen Michael Experiment`}>
+<Layout
+    title={`${article.title} | The Kalen Michael Experiment`}
+    description={article.description}
+    ogImage={ogImage}
+    ogType="article"
+>
     <section class="border-b border-dashed border-slate-800 py-10">
         <a
             href={`/blog/${name}/`}

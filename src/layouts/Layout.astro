@@ -7,14 +7,21 @@ import ThemeToggle from '../components/ThemeToggle.astro'
 interface Props {
     title?: string
     description?: string
+    ogImage?: string
+    ogType?: 'website' | 'article'
     rssHref?: string
 }
 
 const {
     title = 'The Kalen Michael Experiment | Welcome to the Lab',
     description = 'A public log of self-trust experiments. Testing mindset, endurance, and discipline in real time. Hard proof, zero fluff.',
+    ogImage,
+    ogType = 'website',
     rssHref,
 } = Astro.props
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? Astro.url.origin
+const canonical = `${site}${Astro.url.pathname}`
 
 const MENU = [
     { id: 'experiments', label: 'EXPERIMENTS', href: '/experiments' },
@@ -48,6 +55,17 @@ const active =
         <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:site_name" content="The Kalen Michael Experiment" />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
         <link rel="alternate" type="application/rss+xml" title="The Kalen Michael Experiment RSS" href="/rss.xml" />
         {rssHref && (
             <link rel="alternate" type="application/rss+xml" title={`${title} RSS`} href={rssHref} />
