@@ -46,6 +46,7 @@ export async function buildFeedItems(
             sanitize({ dropElements: ['script', 'style'] }),
         ])
 
+        let mediaContent = null as string | null
         if (entry.data.thumbnail) {
             const optimized = await getImage({
                 src: entry.data.thumbnail,
@@ -53,7 +54,7 @@ export async function buildFeedItems(
                 height: 360,
                 fit: 'cover',
             })
-            content = `<img src="${baseUrl}${optimized.src}" alt="${entry.data.title}" width="640" height="360" />${content}`
+            mediaContent = `<media:content url="${baseUrl}${optimized.src}" medium="image" type="image/webp" width="640" height="360" />`
         }
 
         items.push({
@@ -62,6 +63,7 @@ export async function buildFeedItems(
             pubDate: entry.data.date ? new Date(entry.data.date) : undefined,
             description: entry.data.description,
             content,
+            ...(mediaContent ? { customData: mediaContent } : {}),
             ...(options?.blogCategory
                 ? { categories: [labelFromSlug(name)] }
                 : {}),

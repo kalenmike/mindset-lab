@@ -19,6 +19,7 @@ export async function GET(context: APIContext) {
             'A public log of experiments in mindset, physical endurance, and operational discipline. Real frameworks, zero wishy-washy fluff.',
         site,
         items,
+        xmlns: { media: 'http://search.yahoo.com/mrss/' },
         customData: '<language>en-us</language>',
     })
 }

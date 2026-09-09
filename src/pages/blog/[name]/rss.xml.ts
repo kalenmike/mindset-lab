@@ -29,6 +29,7 @@ export async function GET(context: APIContext) {
         description: meta?.data.description ?? '',
         site,
         items,
+        xmlns: { media: 'http://search.yahoo.com/mrss/' },
         customData: '<language>en-us</language>',
     })
 }
