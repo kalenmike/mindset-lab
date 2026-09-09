@@ -66,9 +66,9 @@ const active =
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         {ogImage && <meta name="twitter:image" content={ogImage} />}
-        <link rel="alternate" type="application/rss+xml" title="The Kalen Michael Experiment | Blog RSS" href="/blog/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title="The Kalen Michael Experiment | Blog RSS" href={`${site}/blog/rss.xml`} />
         {rssHref && (
-            <link rel="alternate" type="application/rss+xml" title={`${title} RSS`} href={rssHref} />
+            <link rel="alternate" type="application/rss+xml" title={`${title} RSS`} href={`${site}${rssHref}`} />
         )}
         <script is:inline>
             ;(function () {
