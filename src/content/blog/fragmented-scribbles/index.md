@@ -5,3 +5,5 @@ thumbnail: "./images/kalen-laptop.JPG"
 tag: RAW
 order: 1
 ---
+
+> This blog is still in the process of being transferred over and cleaned up.

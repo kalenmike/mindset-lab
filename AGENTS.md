@@ -291,9 +291,10 @@ via `ultrahtml`'s `transform`/`walk`/`sanitize`. This preserves inline MDX compo
   (YYYY-MM-DD or `YYYY-MM-DD HH:MM`), `description` from frontmatter.
 
 Autodiscovery: `Layout.astro` always emits `<link rel="alternate" type="application/rss+xml"
-title="The Kalen Michael Experiment | Blog RSS" href="/blog/rss.xml" />` in the `<head>`, plus a
-per-blog feed link when a page passes the optional `rssHref` prop (the `/blog/{name}/` index does).
-The root `/rss.xml` is intentionally not used — the blog feed lives under `/blog` so the site root
+title="The Kalen Michael Experiment | Blog RSS" href="https://kalenmichael.com/blog/rss.xml" />`
+(absolute URLs — root-relative hrefs break some discovery tools) in the `<head>`, plus a per-blog
+feed link when a page passes the optional `rssHref` prop (the `/blog/{name}/` index does). The root
+`/rss.xml` is intentionally not used — the blog feed lives under `/blog` so the site root
 stays free for a future site-wide feed. No integration is needed — `@astrojs/rss` is a plain
 utility (no `peerDependencies`) and the endpoints are prerendered static `.xml` files.
 
