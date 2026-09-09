@@ -1,15 +1,17 @@
 ---
 title: The 83-Day Bikepacking Adventure
-subtitle: "the pursuit"
-tagline: 3000km by bicycle
+subtitle: "The Pursuit"
+tagline: "Quit the job. Sell everything. 3000 km from London to Lisbon - by bicycle, in winter."
 status: COMPLETE
 start: "2017-12-07"
 duration: 83 days
 tag: LAB
-description: "an adventure"
+description: "A corporate life that wasn't mine. Sell down to what a bicycle can carry, quit the job, and ride from London to Lisbon in winter. The question: how little can I need, and will getting there alone be enough to feel like I chose my own life?"
 protocol:
-  - Get from London to Lisbon by bicycle
-  - Go full minimilist
+  - Sell everything non-essential and document what remains.
+  - Buy a second-hand bicycle and only the gear needed for a winter crossing.
+  - Map a rough London-to-Lisbon route with a daily distance baseline.
+  - Fix a departure date, then keep moving until the destination is reached.
 href: ""
 featured: false
 order: 3
