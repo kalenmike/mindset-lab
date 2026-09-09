@@ -7,11 +7,13 @@ import ThemeToggle from '../components/ThemeToggle.astro'
 interface Props {
     title?: string
     description?: string
+    rssHref?: string
 }
 
 const {
     title = 'The Kalen Michael Experiment | Welcome to the Lab',
     description = 'A public log of self-trust experiments. Testing mindset, endurance, and discipline in real time. Hard proof, zero fluff.',
+    rssHref,
 } = Astro.props
 
 const MENU = [
@@ -46,6 +48,10 @@ const active =
         <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <link rel="alternate" type="application/rss+xml" title="The Kalen Michael Experiment RSS" href="/rss.xml" />
+        {rssHref && (
+            <link rel="alternate" type="application/rss+xml" title={`${title} RSS`} href={rssHref} />
+        )}
         <script is:inline>
             ;(function () {
                 var theme = null

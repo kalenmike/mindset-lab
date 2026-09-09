@@ -270,6 +270,28 @@ the photo stays fully optimized (WebP, `/_astro/` output) just like markdown ima
   bypasses the markdown image pipeline, so it is neither optimized nor path-resolved. Use
   `![]()` syntax or the `Polaroid` component instead.
 
+### RSS feeds (global + per-blog, full content)
+
+Two feeds are statically generated from the `blogs` collection at build time:
+
+- **Global:** `/rss.xml` (`src/pages/rss.xml.ts`) — every article across all blogs, newest first.
+- **Per-blog:** `/blog/{name}/rss.xml` (`src/pages/blog/[name]/rss.xml.ts`) — that blog's articles
+  only, titled `"{blogTitle} | The Kalen Michael Experiment"`.
+
+Both share `buildFeedItems()` in `src/lib/rss.ts`, which renders each article's full MDX body
+to HTML using the **Astro Container API** (`astro/container` `experimental_AstroContainer`,
+`loadRenderers` from `astro:container`, and `@astrojs/mdx`'s `getContainerRenderer()`), then
+rewrites relative `a[href]`/`img[src]` to absolute `site` URLs and drops `script`/`style` tags
+via `ultrahtml`'s `transform`/`walk`/`sanitize`. This preserves inline MDX components
+(`Polaroid`, `Comments`) in the feed. Item `pubDate` comes from each article's `date`
+(YYYY-MM-DD), `description` from frontmatter.
+
+Autodiscovery: `Layout.astro` always emits `<link rel="alternate" type="application/rss+xml"
+title="Mindset Lab RSS" href="/rss.xml" />` in the `<head>`, plus a per-blog feed link when a
+page passes the optional `rssHref` prop (the `/blog/{name}/` index does). No integration is
+needed — `@astrojs/rss` is a plain utility (no `peerDependencies`) and the endpoints are
+prerendered static `.xml` files.
+
 ### Tag system (single source of truth in `src/categories.ts`)
 
 Pillar names/labels/colors and note-tag labels/colors share one `CATEGORIES` record, so a

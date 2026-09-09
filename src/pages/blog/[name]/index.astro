@@ -49,7 +49,7 @@ const category = blog?.tag
     : null
 ---
 
-<Layout title={`${blog?.title ?? name} // Mindset Lab`}>
+<Layout title={`${blog?.title ?? name} | The Kalen Michael Experiment`} rssHref={`/blog/${name}/rss.xml`}>
     <section class="border-b border-dashed border-slate-800 py-10">
         <a href="/blog" class="text-xs font-bold uppercase tracking-[0.2em] text-slate-600 transition-colors hover:text-white">
             ← all blogs
@@ -86,6 +86,12 @@ const category = blog?.tag
             <span class="text-slate-600">
                 {articles.length} {articles.length === 1 ? 'article' : 'articles'}
             </span>
+            <a
+                href={`/blog/${name}/rss.xml`}
+                class="font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors hover:text-white"
+            >
+                [rss] ↗
+            </a>
         </div>
         {Intro && (
             <div class="blog-content mt-8 max-w-xl">
