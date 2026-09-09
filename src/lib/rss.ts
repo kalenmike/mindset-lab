@@ -1,4 +1,5 @@
 import { getContainerRenderer } from '@astrojs/mdx/container-renderer'
+import { getImage } from 'astro:assets'
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { loadRenderers } from 'astro:container'
 import { render, type CollectionEntry } from 'astro:content'
@@ -8,7 +9,11 @@ import type { RSSFeedItem } from '@astrojs/rss'
 
 type BlogEntry = CollectionEntry<'blogs'>
 
-export async function buildFeedItems(entries: BlogEntry[], site: string): Promise<RSSFeedItem[]> {
+export async function buildFeedItems(
+    entries: BlogEntry[],
+    site: string,
+    options?: { blogCategory?: boolean }
+): Promise<RSSFeedItem[]> {
     const renderers = await loadRenderers([getContainerRenderer()])
     const container = await AstroContainer.create({ renderers })
 
@@ -19,7 +24,7 @@ export async function buildFeedItems(entries: BlogEntry[], site: string): Promis
         const [name, slug] = entry.id.split('/')
         const { Content } = await render(entry)
         const raw = await container.renderToString(Content)
-        const content = await transform(raw.replace(/^<!DOCTYPE html>/, ''), [
+        let content = await transform(raw.replace(/^<!DOCTYPE html>/, ''), [
             async (node) => {
                 await walk(node, (node) => {
                     if (node.attributes) {
@@ -41,14 +46,34 @@ export async function buildFeedItems(entries: BlogEntry[], site: string): Promis
             sanitize({ dropElements: ['script', 'style'] }),
         ])
 
+        if (entry.data.thumbnail) {
+            const optimized = await getImage({
+                src: entry.data.thumbnail,
+                width: 640,
+                height: 360,
+                fit: 'cover',
+            })
+            content = `<img src="${baseUrl}${optimized.src}" alt="${entry.data.title}" width="640" height="360" />${content}`
+        }
+
         items.push({
             title: entry.data.title,
             link: `/blog/${name}/${slug}/`,
             pubDate: entry.data.date ? new Date(entry.data.date) : undefined,
             description: entry.data.description,
             content,
+            ...(options?.blogCategory
+                ? { categories: [labelFromSlug(name)] }
+                : {}),
         })
     }
 
     return items
+}
+
+function labelFromSlug(slug: string): string {
+    return slug
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
 }

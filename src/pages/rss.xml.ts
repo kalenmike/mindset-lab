@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
         .filter((entry) => entry.id.includes('/'))
         .sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''))
 
-    const items = await buildFeedItems(articles, site)
+    const items = await buildFeedItems(articles, site, { blogCategory: true })
 
     return rss({
         title: 'The Kalen Michael Experiment',
