@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content'
 import Layout from '../../../layouts/Layout.astro'
+import Polaroid from '../../../components/Polaroid.astro'
 import { CATEGORIES, type CategoryId } from '../../../categories'
 
 export async function getStaticPaths() {
@@ -47,6 +48,20 @@ const category = article.tag
                 {article.description}
             </p>
         )}
+        {
+            article.thumbnail && (
+                <div class="mt-6 w-full max-w-md">
+                    <Polaroid
+                        image={article.thumbnail}
+                        alt={article.title}
+                        width={640}
+                        height={360}
+                        fit="cover"
+                        emptyCaption
+                    />
+                </div>
+            )
+        }
     </section>
 
     <section class="border-b border-dashed border-slate-800 py-10">

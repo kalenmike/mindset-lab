@@ -69,6 +69,7 @@ const blogs = defineCollection({
             tag: z.enum(['RAW', 'LAB', 'TOOLKIT']).optional(),
             order: z.number().optional(),
             date: z.string().optional(),
+            finished: z.string().optional(),
             thumbnail: image().optional(),
         }),
 })

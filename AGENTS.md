@@ -187,9 +187,9 @@ URLs are folder-derived: `/blog`, `/blog/{name}/`, `/blog/{name}/{article-slug}/
 folder is the blog slug — never duplicate it in frontmatter.
 
 - `index.md` — **blog meta** (folder frontmatter): `title`, `description?`, `tag?`
-  (RAW|LAB|TOOLKIT), `order?` (controls blog ordering on `/blog`). Its markdown body, if
-  present, renders as the intro on `/blog/{name}/`, wrapped in `.blog-content` so it gets the
-  same article typography and spacing.
+  (RAW|LAB|TOOLKIT), `order?`, `finished?` (YYYY-MM-DD; present = blog closed, absent =
+  open). Its markdown body, if present, renders as the intro on `/blog/{name}/`, wrapped in
+  `.blog-content` so it gets the same article typography and spacing.
 - `{article-slug}.md` / `{article-slug}.mdx` — **article**: `title`, `date?`
   (YYYY-MM-DD), `description?`, `tag?`, `order?`. The body renders on
   `/blog/{name}/{article-slug}/` via `render(entry)` from `astro:content`, styled by the
@@ -197,12 +197,18 @@ folder is the blog slug — never duplicate it in frontmatter.
   article needs an inline component (see Comments below).
 
 Shared schema (`src/content.config.ts` `blogs` collection): `title`, `description?`, `tag?`,
-`order?`, `date?`, `thumbnail?` (image) — role (blog vs article) is inferred from the entry
-id: Astro's glob loader normalizes a folder's `index.md` to the bare folder name (id has
-**no slash**, e.g. `the-pursuit` = blog meta), so an id **with** a slash is an article
-(`name/slug`, slug = id's last segment). The loader pattern is `**/*.{md,mdx}` (requires the
-`@astrojs/mdx` integration in `astro.config.mjs` — pinned to `7.0.x`, not 8, to match Astro
-7's `markdown-satteri`).
+`order?`, `date?`, `finished?`, `thumbnail?` (image) — role (blog vs article) is inferred
+from the entry id: Astro's glob loader normalizes a folder's `index.md` to the bare folder
+name (id has **no slash**, e.g. `the-pursuit` = blog meta), so an id **with** a slash is an
+article (`name/slug`, slug = id's last segment). The loader pattern is `**/*.{md,mdx}`
+(requires the `@astrojs/mdx` integration in `astro.config.mjs` — pinned to `7.0.x`, not 8,
+to match Astro 7's `markdown-satteri`).
+
+Blog ordering: `/blog` sorts blogs by **latest post date** (max article `date`, descending —
+the blog with the most recent post sits on top) and shows that date on each row. On
+`/blog/{name}/`, articles sort by `date` **descending** (newest first) when the blog has no
+`finished` field (open), and **ascending** (existing `order` then `date` — chronological
+reading order) when `finished` is set (closed). The blog header shows its latest post date.
 
 - `thumbnail` uses the content-schema `image()` helper: set it to a **relative path** from
   the content file (e.g. `thumbnail: ./images/d1-kalen-and-davin.jpg`). It validates the

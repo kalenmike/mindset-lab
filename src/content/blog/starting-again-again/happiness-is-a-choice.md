@@ -1,7 +1,7 @@
 ---
 title: "Happiness is a Choice"
 description: ""
-date: "2018-06-31"
+date: "2018-06-30"
 thumbnail: ""
 tag: RAW
 ---

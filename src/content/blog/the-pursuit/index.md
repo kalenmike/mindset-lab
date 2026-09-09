@@ -1,8 +1,8 @@
 ---
 title: "Pedal to Lisbon: 3,000 Kilometers from London to the Edge of Europe"
 description: "Quitting a corporate job, trading a car for a second-hand bicycle, and chasing an uncertain path across Europe on a 3,000-kilometer ride to the edge of the continent."
-date: "2018-02-22"
-tag: LAB
+finished: "2018-02-22"
+tag: RAW
 order: 1
 thumbnail: ./images/d1-kalen-and-davin.jpg
 ---
@@ -17,7 +17,7 @@ Spontaneously I quit my job, sold almost everything, and in its place I bought a
 **Destination:** Lisbon, Portugal
 
 ### Significant Stops
-Calais, France **|** Bordeaux, France **|** Bilbao, Spain **|** Santiago de Compestella, Spain **|** Cape Fisterra, Spain
+Calais, France **|** Bordeaux, France **|** Bilbao, Spain **|** Santiago de Compostela, Spain **|** Cape Fisterra, Spain
 
 [Check out the map here](/maps/the-pursuit/)
 

@@ -11,12 +11,17 @@ const blogs = entries
     .filter((entry) => !entry.id.includes('/'))
     .map((entry) => {
         const name = entry.id
-        const articleCount = entries.filter(
+        const articles = entries.filter(
             (candidate) => candidate.id.includes('/') && candidate.id.startsWith(`${name}/`)
-        ).length
-        return { name, data: entry.data, articleCount }
+        )
+        const latestPost = articles
+            .map((candidate) => candidate.data.date)
+            .filter((date): date is string => Boolean(date))
+            .sort()
+            .at(-1)
+        return { name, data: entry.data, articleCount: articles.length, latestPost }
     })
-    .sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''))
+    .sort((a, b) => (b.latestPost ?? '').localeCompare(a.latestPost ?? ''))
 ---
 
 <Layout title="Blog // Mindset Lab">
@@ -63,8 +68,8 @@ const blogs = entries
                         }
                         <div class="flex flex-1 flex-col gap-2">
                             <div class="flex items-baseline gap-4 text-sm">
-                                {blog.data.date && (
-                                    <span class="text-slate-500">{blog.data.date}</span>
+                                {blog.latestPost && (
+                                    <span class="text-slate-500">{blog.latestPost}</span>
                                 )}
                                 {blog.data.tag && (
                                     <span
