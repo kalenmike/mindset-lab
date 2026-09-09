@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content'
 import Layout from '../../../layouts/Layout.astro'
 import Polaroid from '../../../components/Polaroid.astro'
 import { CATEGORIES, type CategoryId } from '../../../categories'
+import { formatDateTime } from '../../../lib/dates'
 
 export async function getStaticPaths() {
     const entries = await getCollection('blogs')
@@ -33,7 +34,7 @@ const category = article.tag
             ← {name}
         </a>
         <p class="mb-6 mt-8 flex items-baseline gap-4 text-xs">
-            {article.date && <span class="text-slate-600">{article.date}</span>}
+            {article.date && <span class="text-slate-600">{formatDateTime(article.date)}</span>}
             {category && (
                 <span class={`font-bold uppercase tracking-wider ${category.color}`}>
                     [{category.name}]

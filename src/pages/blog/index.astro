@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro'
 import MoveLeftIcon from '../../components/MoveLeftIcon.astro'
 import Polaroid from '../../components/Polaroid.astro'
 import { CATEGORIES, type CategoryId } from '../../categories'
+import { relativeTime } from '../../lib/dates'
 
 const entries = await getCollection('blogs')
 
@@ -85,7 +86,7 @@ const recentArticles = entries
                         <div class="flex flex-1 flex-col gap-2">
                             <div class="flex items-baseline gap-4 text-sm">
                                 {article.data.date && (
-                                    <span class="text-slate-500">{article.data.date}</span>
+                                    <span class="text-slate-500">{relativeTime(article.data.date)}</span>
                                 )}
                                 {article.data.tag && (
                                     <span
@@ -150,7 +151,7 @@ const recentArticles = entries
                         <div class="flex flex-1 flex-col gap-2">
                             <div class="flex items-baseline gap-4 text-sm">
                                 {blog.latestPost && (
-                                    <span class="text-slate-500">{blog.latestPost}</span>
+                                    <span class="text-slate-500">{relativeTime(blog.latestPost)}</span>
                                 )}
                                 {blog.data.tag && (
                                     <span

@@ -28,9 +28,48 @@ export function formatDateLabel(date: Date): string {
     }).format(date)
 }
 
+const MONTHS = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+]
+
+export function formatDateTime(iso: string): string {
+    const date = toLocalDate(iso)
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    return `${day} ${MONTHS[date.getMonth()]} ${date.getFullYear()}, ${hours}:${minutes}`
+}
+
+export function relativeTime(iso: string, now: Date = new Date()): string {
+    const date = toLocalDate(iso)
+    const diffMs = now.getTime() - date.getTime()
+    if (diffMs < 60_000) return 'just now'
+    const minutes = Math.floor(diffMs / 60_000)
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
+    const hours = Math.floor(minutes / 60)
+    if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`
+    const days = Math.floor((utcDay(now) - utcDay(date)) / 86400000)
+    if (days < 30) return `${days} day${days === 1 ? '' : 's'} ago`
+    if (days < 365) return `${Math.floor(days / 30)} month${Math.floor(days / 30) === 1 ? '' : 's'} ago`
+    return `${Math.floor(days / 365)} year${Math.floor(days / 365) === 1 ? '' : 's'} ago`
+}
+
 export function toLocalDate(iso: string): Date {
-    const [year, month, day] = iso.split('-').map(Number)
-    return new Date(year, month - 1, day)
+    const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/)
+    if (!match) return new Date(NaN)
+    const [, year, month, day, hour = '0', minute = '0'] = match
+    return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute))
 }
 
 export function toISO(date: Date): string {

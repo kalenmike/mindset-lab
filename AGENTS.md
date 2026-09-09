@@ -191,7 +191,8 @@ folder is the blog slug — never duplicate it in frontmatter.
   open). Its markdown body, if present, renders as the intro on `/blog/{name}/`, wrapped in
   `.blog-content` so it gets the same article typography and spacing.
 - `{article-slug}.md` / `{article-slug}.mdx` — **article**: `title`, `date?`
-  (YYYY-MM-DD), `description?`, `tag?`, `order?`. The body renders on
+  (YYYY-MM-DD or `YYYY-MM-DD HH:MM` for precision — both accepted and parsed by
+  `toLocalDate`/`relativeTime`), `description?`, `tag?`, `order?`. The body renders on
   `/blog/{name}/{article-slug}/` via `render(entry)` from `astro:content`, styled by the
   `.blog-content` block in `src/styles/global.css`. Use **MDX** (`.mdx`) only when the
   article needs an inline component (see Comments below).
@@ -284,7 +285,7 @@ to HTML using the **Astro Container API** (`astro/container` `experimental_Astro
 rewrites relative `a[href]`/`img[src]` to absolute `site` URLs and drops `script`/`style` tags
 via `ultrahtml`'s `transform`/`walk`/`sanitize`. This preserves inline MDX components
 (`Polaroid`, `Comments`) in the feed. Item `pubDate` comes from each article's `date`
-(YYYY-MM-DD), `description` from frontmatter.
+  (YYYY-MM-DD or `YYYY-MM-DD HH:MM`), `description` from frontmatter.
 
 Autodiscovery: `Layout.astro` always emits `<link rel="alternate" type="application/rss+xml"
 title="Mindset Lab RSS" href="/rss.xml" />` in the `<head>`, plus a per-blog feed link when a
