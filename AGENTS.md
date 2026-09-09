@@ -277,7 +277,8 @@ the photo stays fully optimized (WebP, `/_astro/` output) just like markdown ima
 
 Two feeds are statically generated from the `blogs` collection at build time:
 
-- **Global:** `/rss.xml` (`src/pages/rss.xml.ts`) — every article across all blogs, newest first.
+- **Global:** `/blog/rss.xml` (`src/pages/blog/rss.xml.ts`) — every article across all blogs,
+  newest first, titled `"The Kalen Michael Experiment | Blog"`.
 - **Per-blog:** `/blog/{name}/rss.xml` (`src/pages/blog/[name]/rss.xml.ts`) — that blog's articles
   only, titled `"{blogTitle} | The Kalen Michael Experiment"`.
 
@@ -290,10 +291,11 @@ via `ultrahtml`'s `transform`/`walk`/`sanitize`. This preserves inline MDX compo
   (YYYY-MM-DD or `YYYY-MM-DD HH:MM`), `description` from frontmatter.
 
 Autodiscovery: `Layout.astro` always emits `<link rel="alternate" type="application/rss+xml"
-title="Mindset Lab RSS" href="/rss.xml" />` in the `<head>`, plus a per-blog feed link when a
-page passes the optional `rssHref` prop (the `/blog/{name}/` index does). No integration is
-needed — `@astrojs/rss` is a plain utility (no `peerDependencies`) and the endpoints are
-prerendered static `.xml` files.
+title="The Kalen Michael Experiment | Blog RSS" href="/blog/rss.xml" />` in the `<head>`, plus a
+per-blog feed link when a page passes the optional `rssHref` prop (the `/blog/{name}/` index does).
+The root `/rss.xml` is intentionally not used — the blog feed lives under `/blog` so the site root
+stays free for a future site-wide feed. No integration is needed — `@astrojs/rss` is a plain
+utility (no `peerDependencies`) and the endpoints are prerendered static `.xml` files.
 
 ### Tag system (single source of truth in `src/categories.ts`)
 

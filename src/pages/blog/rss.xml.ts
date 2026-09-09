@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import type { APIContext } from 'astro'
-import { buildFeedItems } from '../lib/rss'
+import { buildFeedItems } from '../../lib/rss'
 
 export async function GET(context: APIContext) {
     const site = context.site?.href ?? 'https://kalenmichael.com'
@@ -14,9 +14,9 @@ export async function GET(context: APIContext) {
     const items = await buildFeedItems(articles, site, { blogCategory: true })
 
     return rss({
-        title: 'The Kalen Michael Experiment',
+        title: 'The Kalen Michael Experiment | Blog',
         description:
-            'A public log of experiments in mindset, physical endurance, and operational discipline. Real frameworks, zero wishy-washy fluff.',
+            'Every article from the lab blog — experiments in mindset, physical endurance, and operational discipline. Real frameworks, zero wishy-washy fluff.',
         site,
         items,
         xmlns: { media: 'http://search.yahoo.com/mrss/' },
