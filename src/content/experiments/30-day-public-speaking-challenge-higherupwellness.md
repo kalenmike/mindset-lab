@@ -120,11 +120,13 @@ calendar:
     "2026-08-30":
       label: "18"
       title: Day 18 - [LAB] Running today really showed this
-      releaseDate: "2026-09-08"
+      href: https://www.instagram.com/p/DdCAeiyMAcK/
+      linkLabel: watch the reel
     "2026-08-31":
       label: "19"
       title: Day 19 - [TOOLKIT] Try this to unst*ck your life today
-      releaseDate: "2026-09-09"
+      href: https://www.instagram.com/p/DdEiWM_sBW9/
+      linkLabel: watch the reel
     "2026-09-01":
       label: "20"
       title: Day 20 - [RAW] Otherside of embarrasment
@@ -152,4 +154,16 @@ calendar:
       label: "25"
       title: Day 25 - [RAW] The Odessy
       releaseDate: "2026-09-15"
+    "2026-09-07":
+      label: "26"
+      title: Day 26 - [RAW] Do it Messy
+      releaseDate: "2026-09-16"
+    "2026-09-08":
+      label: "27"
+      title: Day 27 - [RAW] Start Daily Writing
+      releaseDate: "2026-09-17"
+    "2026-09-09":
+      label: "28"
+      title: Day 28 - [RAW] The Little Things Add Up
+      releaseDate: "2026-09-18"
 ---

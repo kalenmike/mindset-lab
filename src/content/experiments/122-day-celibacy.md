@@ -50,5 +50,17 @@ calendar:
       label: "7"
       title: Day 7
       note: I was thinking today that it could be helpful to do a talk with a monk about desire.
+    "2026-09-08":
+      label: "8"
+      title: Day 8
+      note: No amazing insights today.
+    "2026-09-09":
+      label: "9"
+      title: Day 9
+      note: Its been a lazy sort of unproductive day.
+    "2026-09-10":
+      label: "10"
+      title: Day 10
+      note: Its funny how much changes when you turn off the possibility to find a partner. You are forced to accept you will be alone and you need to look inward.
 ---
 
