@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content'
 import { getImage } from 'astro:assets'
 import Layout from '../../../layouts/Layout.astro'
 import Polaroid from '../../../components/Polaroid.astro'
+import MoveLeftIcon from '../../../components/MoveLeftIcon.astro'
+import MoveRightIcon from '../../../components/MoveRightIcon.astro'
 import { CATEGORIES, type CategoryId } from '../../../categories'
 import { formatDateTime } from '../../../lib/dates'
 
@@ -19,6 +21,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const article = entry.data
 const name = entry.id.split('/')[0]
+const slug = entry.id.split('/')[1]
 const { Content } = await render(entry)
 
 const category = article.tag
@@ -31,6 +34,59 @@ const ogImage = article.thumbnail
           Astro.site ?? Astro.url.origin
       ).toString()
     : undefined
+
+const entries = await getCollection('blogs')
+
+const chrono = entries
+    .filter((candidate) => candidate.id.includes('/') && candidate.id.startsWith(`${name}/`))
+    .sort(
+        (a, b) =>
+            (a.data.order ?? 0) - (b.data.order ?? 0) ||
+            (a.data.date ?? '').localeCompare(b.data.date ?? '')
+    )
+    .map((candidate) => ({
+        slug: candidate.id.replace(`${name}/`, ''),
+        data: candidate.data,
+    }))
+
+const index = chrono.findIndex((candidate) => candidate.slug === slug)
+const prev = index > 0 ? chrono[index - 1] : null
+const next = index >= 0 && index < chrono.length - 1 ? chrono[index + 1] : null
+
+const blogOrder = entries
+    .filter((candidate) => !candidate.id.includes('/'))
+    .map((blogEntry) => {
+        const latest = entries
+            .filter(
+                (candidate) =>
+                    candidate.id.includes('/') && candidate.id.startsWith(`${blogEntry.id}/`)
+            )
+            .map((candidate) => candidate.data.date)
+            .filter((date): date is string => Boolean(date))
+            .sort()
+            .at(-1)
+        return { name: blogEntry.id, title: blogEntry.data.title, finished: blogEntry.data.finished, latest }
+    })
+    .sort((a, b) => (b.latest ?? '').localeCompare(a.latest ?? ''))
+
+const currentBlogIndex = blogOrder.findIndex((blogEntry) => blogEntry.name === name)
+const suggested =
+    blogOrder.length > 1 ? blogOrder[(currentBlogIndex + 1) % blogOrder.length] : null
+const suggestedDate = suggested ? (suggested.finished ?? suggested.latest) : null
+
+const prevDate = prev ? prev.data.date : suggestedDate
+const nextDate = next ? next.data.date : suggestedDate
+
+const prevHref = prev
+    ? `/blog/${name}/${prev.slug}/`
+    : suggested
+      ? `/blog/${suggested.name}/`
+      : '/blog'
+const nextHref = next
+    ? `/blog/${name}/${next.slug}/`
+    : suggested
+      ? `/blog/${suggested.name}/`
+      : '/blog'
 ---
 
 <Layout
@@ -82,5 +138,43 @@ const ogImage = article.thumbnail
         <article class="blog-content max-w-xl">
             <Content />
         </article>
+    </section>
+
+    <section class="border-b border-dashed border-slate-800 py-10">
+        <h2 class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
+            <span class="text-slate-700">##</span> Related Articles
+        </h2>
+        <nav class="mt-6 grid gap-4 sm:grid-cols-2">
+            <a
+                href={prevHref}
+                class="group flex flex-col border border-dashed border-slate-800 p-5 transition-colors hover:border-slate-600"
+            >
+                <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors group-hover:text-slate-300">
+                    <MoveLeftIcon alwaysVisible />
+                    {prev ? 'previous' : suggested ? 'another blog' : 'all blogs'}
+                </span>
+                <span class="mt-4 flex-1 font-medium leading-snug text-white">
+                    {prev?.data.title ?? suggested?.title ?? 'Browse all blogs'}
+                </span>
+                <span class="mt-4 text-xs text-slate-500">
+                    {prevDate ? formatDateTime(prevDate) : '—'}
+                </span>
+            </a>
+            <a
+                href={nextHref}
+                class="group flex flex-col border border-dashed border-slate-800 p-5 text-right transition-colors hover:border-slate-600"
+            >
+                <span class="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors group-hover:text-slate-300">
+                    {next ? 'next' : suggested ? 'another blog' : 'all blogs'}
+                    <MoveRightIcon alwaysVisible />
+                </span>
+                <span class="mt-4 flex-1 font-medium leading-snug text-white">
+                    {next?.data.title ?? suggested?.title ?? 'Browse all blogs'}
+                </span>
+                <span class="mt-4 text-xs text-slate-500">
+                    {nextDate ? formatDateTime(nextDate) : '—'}
+                </span>
+            </a>
+        </nav>
     </section>
 </Layout>

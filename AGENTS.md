@@ -42,7 +42,14 @@ Pages (`src/pages/`):
   (filters out `status: HIDDEN` experiments)
 - `blog/index.astro` — `/blog` (unlisted) blog index; grouped by blog folder
 - `blog/[name]/index.astro` — `/blog/{name}` (unlisted) single-blog meta + articles
-- `blog/[name]/[slug].astro` — `/blog/{name}/{slug}` (unlisted) rendered article page
+- `blog/[name]/[slug].astro` — `/blog/{name}/{slug}` (unlisted) rendered article page. Below
+  the article body it renders a `## Related Articles` nav: adjacent articles in **chronological**
+  order (ascending `order` then `date`, regardless of how the blog list is sorted), so
+  PREVIOUS is always the older article and NEXT the newer one. When a direction doesn't exist
+  (oldest/newest article), the cell suggests another blog instead — the next blog in
+  `/blog` order (by latest post date, wrapping). Each card shows an always-visible arrow that
+  slides on hover (`alwaysVisible` variant of the shared `MoveLeftIcon`/`MoveRightIcon`) and a
+  date pinned to the card bottom (an em-dash `—` when absent, so the two cards stay uniform).
 
 The blog section is **standalone-only**: `/blog` is not linked from the nav `MENU` or
 anywhere on the main site — pages are reachable only by direct URL (they stay in
