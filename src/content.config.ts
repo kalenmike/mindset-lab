@@ -23,7 +23,7 @@ const experiments = defineCollection({
         tag: z.enum(['RAW', 'LAB', 'TOOLKIT']),
         description: z.string(),
         protocol: z.array(z.string()),
-        href: z.string(),
+        href: z.string().optional(),
         featured: z.boolean().optional().default(false),
         order: z.number(),
         calendar: z

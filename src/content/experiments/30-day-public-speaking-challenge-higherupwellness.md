@@ -2,7 +2,7 @@
 title: The 30-Day Public Speaking & Content Challenge
 subtitle: ""
 tagline: "Thirty days of output: recording a 60 second video every day for release to Instagram. #higherupwellnesschallenge"
-status: LIVE
+status: COMPLETE
 start: "2026-09-05"
 duration: 30 days
 tag: LAB
@@ -13,7 +13,6 @@ protocol:
   - No edits, no cuts.
   - Review yesterday's output and pick one improvement.
   - Log reps, reach, and energy each evening.
-href: https://kalenmichael.substack.com
 featured: true
 order: 2
 calendar:
@@ -131,11 +130,14 @@ calendar:
       label: "20"
       title: Day 20 - [RAW] Otherside of embarrasment
       releaseDate: "2026-09-10"
+      href: https://www.instagram.com/p/DdHUdpoMLPj/
+      linkLabel: watch the reel
     "2026-09-02":
       label: "21"
       title: Day 21 - [RAW] I've been coregulating
       note: I got to this video a little late after a 2-hour call with my mom about mindset.
-      releaseDate: "2026-09-11"
+      href: https://www.instagram.com/p/DdJ7nsKM_c3/
+      linkLabel: watch the reel
     "2026-09-03":
       label: "22"
       title: Day 22 - [TOOLKIT] Your dream is not so far from your reality
@@ -166,4 +168,12 @@ calendar:
       label: "28"
       title: Day 28 - [RAW] The Little Things Add Up
       releaseDate: "2026-09-18"
+    "2026-09-10":
+      label: "29"
+      title: Day 29 - [RAW] Nothing to Say
+      releaseDate: "2026-09-19"
+    "2026-09-11":
+      label: "30"
+      title: Day 30 - [RAW] Challenge Over!
+      releaseDate: "2026-09-20"
 ---

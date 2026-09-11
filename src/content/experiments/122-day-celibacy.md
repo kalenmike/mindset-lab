@@ -62,5 +62,9 @@ calendar:
       label: "10"
       title: Day 10
       note: Its funny how much changes when you turn off the possibility to find a partner. You are forced to accept you will be alone and you need to look inward.
+    "2026-09-11":
+      label: "11"
+      title: Day 11
+      note: This challenge is starting to show its difficulty now 11 days in. I have had to try hard not to flirt with anyone as I notice my mind wanting to find a romantic connection.
 ---
 

@@ -136,7 +136,8 @@ The `slug` is the markdown **filename** (do not duplicate it in frontmatter):
 ```
 title, subtitle (default ""), tagline, status (LIVE|COMPLETE|HIDDEN),
 start (YYYY-MM-DD), duration, tag (RAW|LAB|TOOLKIT), description,
-protocol[] (ordered steps), href, featured? (bool), order (number)
+protocol[] (ordered steps), href? (external write-up link — only rendered when present and
+the experiment is COMPLETE), featured? (bool), order (number)
 ```
 
 - `order` controls the display sequence on the homepage `/experiments` index (listings are

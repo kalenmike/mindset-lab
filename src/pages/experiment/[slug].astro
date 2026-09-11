@@ -67,7 +67,7 @@ const linkedBlogs = (await getCollection('blogs'))
                         : '[ IN PROGRESS ]'}
                 </p>
             ) : (
-                experiment.href && (
+                experiment.status === 'COMPLETE' && experiment.href && (
                     <a
                         href={experiment.href}
                         target="_blank"
