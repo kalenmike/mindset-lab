@@ -142,20 +142,24 @@ calendar:
       label: "22"
       title: Day 22 - [TOOLKIT] Your dream is not so far from your reality
       note: I decided to double up the embarassment today and go film in public.
-      releaseDate: "2026-09-12"
+      href: https://www.instagram.com/p/DdLe6lZsbS_/
+      linkLabel: watch the reel
     "2026-09-04":
       label: "23"
       title: Day 23 - [RAW] How its going
       note: Just checking in today, I'm feeling a little burnt out and low on investment.
-      releaseDate: "2026-09-13"
+      href: https://www.instagram.com/p/DdKbZIjMuXm/
+      linkLabel: watch the reel
     "2026-09-05":
       label: "24"
       title: Day 24 - [RAW] Quitting Early
-      releaseDate: "2026-09-14"
+      href: https://www.instagram.com/p/DdLzr2FMcPC/
+      linkLabel: watch the reel
     "2026-09-06":
       label: "25"
       title: Day 25 - [RAW] The Odessy
-      releaseDate: "2026-09-15"
+      href: https://www.instagram.com/p/DdOS7NcIS5g/
+      linkLabel: watch the reel
     "2026-09-07":
       label: "26"
       title: Day 26 - [RAW] Do it Messy

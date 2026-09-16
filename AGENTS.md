@@ -161,9 +161,14 @@ calendar: { start: "YYYY-MM-DD", end: "YYYY-MM-DD", days: { "YYYY-MM-DD": { labe
   Release dates are independent of challenge dates — the calendar is always for the
   challenge period.
 - The calendar is the shared component `src/components/Calendar.astro`: the month grid is
-  rendered statically at build time; only the day modal is driven by its bundled module
-  script (click opens, Prev/Next navigate, Escape/backdrop/[close] dismiss). Markup is
-  looked up with `data-cal-day` / `data-cal-panel` (`<template>`) / `data-cal-*` selectors.
+  rendered statically at build time (with correct today/past/future/overdue styles for the
+  build date). Every in-range day cell carries `data-cal-state`, and logged days additionally
+  `data-cal-day` (button). On page load the bundled module script re-derives every cell's
+  today/past/future/overdue state from the *visitor's* runtime "today", refreshing every 60s
+  and on `visibilitychange` — so the today ring rolls over correctly even on long-lived tabs.
+  `data-cal-day` (buttons only) is used for the day modal (click opens, Prev/Next navigate,
+  Escape/backdrop/[close] dismiss). Markup is looked up with `data-cal-day` /
+  `data-cal-panel` (`<template>`) / `data-cal-state` selectors.
 - The `## Calendar` section only renders when an experiment has a `calendar` field.
 
 ### YAML gotchas (frontmatter is YAML, not JSON)
@@ -201,8 +206,9 @@ folder is the blog slug — never duplicate it in frontmatter.
   the intro on `/blog/{name}/`, wrapped in
   `.blog-content` so it gets the same article typography and spacing.
 - `{article-slug}.md` / `{article-slug}.mdx` — **article**: `title`, `date?`
-  (YYYY-MM-DD or `YYYY-MM-DD HH:MM` for precision — both accepted and parsed by
-  `toLocalDate`/`relativeTime`), `description?`, `tag?`, `order?`. The body renders on
+  (YYYY-MM-DD or `YYYY-MM-DD HH:MM` for precision — both accepted; treated as the
+  **author's local time in `Europe/Madrid`** and rendered client-side, see Timestamps
+  below), `description?`, `tag?`, `order?`. The body renders on
   `/blog/{name}/{article-slug}/` via `render(entry)` from `astro:content`, styled by the
   `.blog-content` block in `src/styles/global.css`. Use **MDX** (`.mdx`) only when the
   article needs an inline component (see Comments below).
@@ -331,9 +337,32 @@ back to a neutral `text-slate-400` when a tag key is unknown.
   MICHAEL" wordmark; `heading` prop renders `h1` (homepage) vs styled `<p>` (subpages).
 - `src/components/Footer.astro` — `## Elsewhere` social links + the closing line.
 - `src/components/Status.astro`, `ExperimentRow.astro`, `MoveLeftIcon.astro`.
-- `src/lib/dates.ts` — pure date helpers (`toLocalDate`, `formatDateLabel`,
-  `monthWeeks`, `daysRemaining`, `experimentEndDate`, `toISO`, `CalendarDay`).
+- `src/components/RelativeTime.astro` — client-side timestamp rendering (see Timestamps
+  below); used on `/blog`, `/blog/{name}/`, and article pages.
+- `src/lib/dates.ts` — pure date helpers (`toLocalDate`, `formatDateLabel`, `toEpoch`,
+  `formatMadrid`, `monthWeeks`, `daysRemaining`, `experimentEndDate`, `toISO`,
+  `CalendarDay`; `AUTHOR_TIME_ZONE = 'Europe/Madrid'`).
 - Keep tag/pillar config in `src/categories.ts`; edit date helpers there, not per-page.
+
+### Timestamps (client-side, author timezone + visitor timezone)
+
+Blog `date` strings (`YYYY-MM-DD` or `YYYY-MM-DD HH:MM`) are the **author's local time in
+`Europe/Madrid`**. The site is static, so no server-side format can be correct for every
+visitor — formatting happens in the browser via the shared `RelativeTime.astro` component:
+
+- `mode="relative"` (default): human "X ago" via `Intl.RelativeTimeFormat`, computed
+  against the visitor's current time and re-rendered every 30s. Values are rounded to the
+  nearest whole unit with half-unit boundaries (`59.5m`, `23.5h`, `29.5d`, `11.5mo`) so
+  `Intl` never emits decimals ("23 hours ago", never "23.195 hours ago") and friendly
+  "yesterday"/"last month" forms kick in at the right threshold.
+- `mode="datetime"`: absolute `dd MMM yyyy, HH:MM` in the **visitor's** local timezone via
+  `Intl.DateTimeFormat`.
+- The server renders a build-time fallback (same formatter) so the HTML is correct before
+  JS runs, plus a `title` tooltip with the author's Madrid time. `toEpoch(iso)` converts the
+  Madrid wall-clock to UTC milliseconds (Intl `timeZone: 'Europe/Madrid'`, DST-safe via
+  iterative zone→UTC resolution); `formatMadrid(epoch)` renders the fallback/tooltip with
+  zero dependence on the build machine's timezone. Use `<RelativeTime iso={...} mode=... />`
+  for *any* user-visible blog date — never `toLocalDate`/manual formatting for these.
 
 ## Deployment
 

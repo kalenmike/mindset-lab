@@ -28,48 +28,68 @@ export function formatDateLabel(date: Date): string {
     }).format(date)
 }
 
-const MONTHS = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-]
-
-export function formatDateTime(iso: string): string {
-    const date = toLocalDate(iso)
-    const day = String(date.getDate()).padStart(2, '0')
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
-    return `${day} ${MONTHS[date.getMonth()]} ${date.getFullYear()}, ${hours}:${minutes}`
-}
-
-export function relativeTime(iso: string, now: Date = new Date()): string {
-    const date = toLocalDate(iso)
-    const diffMs = now.getTime() - date.getTime()
-    if (diffMs < 60_000) return 'just now'
-    const minutes = Math.floor(diffMs / 60_000)
-    if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
-    const hours = Math.floor(minutes / 60)
-    if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`
-    const days = Math.floor((utcDay(now) - utcDay(date)) / 86400000)
-    if (days < 30) return `${days} day${days === 1 ? '' : 's'} ago`
-    if (days < 365) return `${Math.floor(days / 30)} month${Math.floor(days / 30) === 1 ? '' : 's'} ago`
-    return `${Math.floor(days / 365)} year${Math.floor(days / 365) === 1 ? '' : 's'} ago`
-}
-
 export function toLocalDate(iso: string): Date {
     const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/)
     if (!match) return new Date(NaN)
     const [, year, month, day, hour = '0', minute = '0'] = match
     return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute))
+}
+
+const AUTHOR_TIME_ZONE = 'Europe/Madrid'
+
+export function toEpoch(iso: string): number {
+    const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/)
+    if (!match) return NaN
+    const [, year, month, day, hour = '0', minute = '0'] = match
+    return zonedTimeToUtc(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute))
+}
+
+function zonedTimeToUtc(year: number, month0: number, day: number, hour: number, minute: number): number {
+    const partsFmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: AUTHOR_TIME_ZONE,
+        hour12: false,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    })
+    const wall = Date.UTC(year, month0, day, hour, minute)
+    let timestamp = wall
+    for (let i = 0; i < 3; i += 1) {
+        const parts: Record<string, number> = {}
+        for (const part of partsFmt.formatToParts(new Date(timestamp))) {
+            if (part.type !== 'literal') parts[part.type] = Number(part.value)
+        }
+        const shownAsUtc = Date.UTC(
+            parts.year,
+            parts.month - 1,
+            parts.day,
+            parts.hour,
+            parts.minute,
+            parts.second
+        )
+        timestamp = wall - (shownAsUtc - timestamp)
+    }
+    return timestamp
+}
+
+export function formatMadrid(epoch: number): string {
+    if (!Number.isFinite(epoch)) return ''
+    const parts: Record<string, string> = {}
+    for (const part of new Intl.DateTimeFormat('en-US', {
+        timeZone: AUTHOR_TIME_ZONE,
+        hourCycle: 'h23',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).formatToParts(new Date(epoch))) {
+        if (part.type !== 'literal') parts[part.type] = part.value
+    }
+    return `${parts.day} ${parts.month} ${parts.year}, ${parts.hour}:${parts.minute}`
 }
 
 export function toISO(date: Date): string {

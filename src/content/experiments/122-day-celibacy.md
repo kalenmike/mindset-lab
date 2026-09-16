@@ -66,5 +66,21 @@ calendar:
       label: "11"
       title: Day 11
       note: This challenge is starting to show its difficulty now 11 days in. I have had to try hard not to flirt with anyone as I notice my mind wanting to find a romantic connection.
+    "2026-09-12":
+      label: ""
+      title: Day 12
+      note: "It was a busy day and I didn't think much about this experiment."
+    "2026-09-13":
+      label: ""
+      title: Day 13
+      note:  "I notice smiles more. I notice people more."
+    "2026-09-14":
+      label: ""
+      title: Day 14
+      note:  "It's interesting how disabling your romantic drive lets you focus on other things."
+    "2026-09-15":
+      label: ""
+      title: Day 15
+      note:  "I have moments when I crave romantic connection. When I feel like this experiment is too long. A woman looks at me as I pass by and I wonder if I have now lost the opportunity to meet someone special."
 ---
 

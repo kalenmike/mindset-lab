@@ -5,8 +5,8 @@ import Layout from '../../../layouts/Layout.astro'
 import Polaroid from '../../../components/Polaroid.astro'
 import MoveLeftIcon from '../../../components/MoveLeftIcon.astro'
 import MoveRightIcon from '../../../components/MoveRightIcon.astro'
+import RelativeTime from '../../../components/RelativeTime.astro'
 import { CATEGORIES, type CategoryId } from '../../../categories'
-import { formatDateTime } from '../../../lib/dates'
 
 export async function getStaticPaths() {
     const entries = await getCollection('blogs')
@@ -103,7 +103,11 @@ const nextHref = next
             ← {name}
         </a>
         <p class="mb-6 mt-8 flex items-baseline gap-4 text-xs">
-            {article.date && <span class="text-slate-600">{formatDateTime(article.date)}</span>}
+            {article.date && (
+                <span class="text-slate-600">
+                    <RelativeTime iso={article.date} mode="datetime" />
+                </span>
+            )}
             {category && (
                 <span class={`font-bold uppercase tracking-wider ${category.color}`}>
                     [{category.name}]
@@ -157,7 +161,7 @@ const nextHref = next
                     {prev?.data.title ?? suggested?.title ?? 'Browse all blogs'}
                 </span>
                 <span class="mt-4 text-xs text-slate-500">
-                    {prevDate ? formatDateTime(prevDate) : '—'}
+                    {prevDate ? <RelativeTime iso={prevDate} mode="datetime" /> : '—'}
                 </span>
             </a>
             <a
@@ -172,7 +176,7 @@ const nextHref = next
                     {next?.data.title ?? suggested?.title ?? 'Browse all blogs'}
                 </span>
                 <span class="mt-4 text-xs text-slate-500">
-                    {nextDate ? formatDateTime(nextDate) : '—'}
+                    {nextDate ? <RelativeTime iso={nextDate} mode="datetime" /> : '—'}
                 </span>
             </a>
         </nav>
