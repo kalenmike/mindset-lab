@@ -163,11 +163,13 @@ calendar:
     "2026-09-07":
       label: "26"
       title: Day 26 - [RAW] Do it Messy
-      releaseDate: "2026-09-16"
+      href: https://www.instagram.com/p/DdTzE6gMVsN/
+      linkLabel: watch the reel
     "2026-09-08":
       label: "27"
       title: Day 27 - [RAW] Start Daily Writing
-      releaseDate: "2026-09-17"
+      href: https://www.instagram.com/p/DdYqmyZMWfY/
+      linkLabel: watch the reel
     "2026-09-09":
       label: "28"
       title: Day 28 - [RAW] The Little Things Add Up

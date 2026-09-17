@@ -3,7 +3,7 @@ title: The Celibacy Experiment
 subtitle: ""
 tagline: 122 days of abstinence to finish 2026. An experiment in self-trust. No outsourcing my calm.
 status: LIVE
-start: "2026-06-01"
+start: "2026-09-01"
 duration: 122 days
 tag: LAB
 description: How far can I get relying only on myself? 4 months with no sexual energy or romantic interest spent outward. Does that bring me closer to myself, or just make life harder? Let's find out.
@@ -13,7 +13,7 @@ protocol:
   - No romantic relationships or dates (friendships ok).
 href: https://kalenmichael.substack.com
 featured: false
-order: 1
+order: 2
 calendar:
   start: "2026-09-01"
   end: "2026-12-31"
@@ -67,20 +67,22 @@ calendar:
       title: Day 11
       note: This challenge is starting to show its difficulty now 11 days in. I have had to try hard not to flirt with anyone as I notice my mind wanting to find a romantic connection.
     "2026-09-12":
-      label: ""
       title: Day 12
       note: "It was a busy day and I didn't think much about this experiment."
     "2026-09-13":
-      label: ""
       title: Day 13
       note:  "I notice smiles more. I notice people more."
     "2026-09-14":
-      label: ""
       title: Day 14
       note:  "It's interesting how disabling your romantic drive lets you focus on other things."
     "2026-09-15":
-      label: ""
       title: Day 15
       note:  "I have moments when I crave romantic connection. When I feel like this experiment is too long. A woman looks at me as I pass by and I wonder if I have now lost the opportunity to meet someone special."
+    "2026-09-16":
+      title: Day 16
+      note:  "I noticed I have been burnout, my mind is not fueled up. So I focused on eating well and decided to start doing meditation."
+    "2026-09-17":
+      title: Day 17
+      note:  "So this feels embarassing to write but I have been feeling stronger urges. My technique so far for dealing with them has been keagle exercises and breathing (2 fast in, 1 slow in, out through mouth). Its been working so far."
 ---
 

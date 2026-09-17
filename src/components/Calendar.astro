@@ -104,11 +104,8 @@ const inRange = (date: Date) => date >= startDate && date <= endDate
                                     {date.getDate()}
                                 </span>
                                 <span
-                                    class={
-                                        entry?.label
-                                            ? 'text-sm font-medium leading-none text-slate-300'
-                                            : 'text-sm leading-none text-slate-600'
-                                    }
+                                    class='text-sm font-medium leading-none text-slate-300'
+
                                 >
                                     {entry?.label ?? dayIndex(date)}
                                     {available && (
