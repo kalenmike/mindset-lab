@@ -84,5 +84,26 @@ calendar:
     "2026-09-17":
       title: Day 17
       note:  "So this feels embarassing to write but I have been feeling stronger urges. My technique so far for dealing with them has been keagle exercises and breathing (2 fast in, 1 slow in, out through mouth). Its been working so far."
+    "2026-09-18":
+      title: Day 18
+      note:  "It seems like things are calming down with my new techniques, as well as the yoga and meditation."
+    "2026-09-19":
+      title: Day 19
+      note:  "Not too many insights today."
+    "2026-09-20":
+      title: Day 20
+      note:  "No time to even think today I was busy non stop."
+    "2026-09-21":
+      title: Day 21
+      note:  "Lazy day, siesta and recovery."
+    "2026-09-22":
+      title: Day 22
+      note:  "I caught myself wondering whether I will carry this on past the 122 days. Its been strangely freeing."
+    "2026-09-23":
+      title: Day 23
+      note:  "Its seeming like this is going to be easier than I thought."
+    "2026-09-24":
+      title: Day 24
+      note:  "I barely even remember about this experiment these days. I get reminded when a beautiful woman crosses my path but even that is rare."
 ---
 
