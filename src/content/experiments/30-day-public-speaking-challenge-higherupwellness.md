@@ -173,13 +173,16 @@ calendar:
     "2026-09-09":
       label: "28"
       title: Day 28 - [RAW] The Little Things Add Up
-      releaseDate: "2026-09-18"
+      href:  https://www.instagram.com/kalenmichael/reel/DdZ-vK_o-QI/
+      linkLabel: watch the reel
     "2026-09-10":
       label: "29"
       title: Day 29 - [RAW] Nothing to Say
-      releaseDate: "2026-09-19"
+      href:  https://www.instagram.com/kalenmichael/reel/Ddbc6Ehs-VS/
+      linkLabel: watch the reel
     "2026-09-11":
       label: "30"
       title: Day 30 - [RAW] Challenge Over!
-      releaseDate: "2026-09-20"
+      href:  https://www.instagram.com/kalenmichael/reel/DdgUdMeIhkQ/
+      linkLabel: watch the reel
 ---

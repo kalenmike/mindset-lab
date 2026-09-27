@@ -105,5 +105,14 @@ calendar:
     "2026-09-24":
       title: Day 24
       note:  "I barely even remember about this experiment these days. I get reminded when a beautiful woman crosses my path but even that is rare."
+    "2026-09-25":
+      title: Day 25
+      note:  "Not much thought about this today. I explained the challenge a little to a friend."
+    "2026-09-26":
+      title: Day 26
+      note:  "A really busy day, I spoke to some people about this challenge and my insights."
+    "2026-09-27":
+      title: Day 27
+      note:  "A really busy day and this was not on the top of my mind."
 ---
 
