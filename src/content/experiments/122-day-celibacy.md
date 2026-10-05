@@ -114,5 +114,29 @@ calendar:
     "2026-09-27":
       title: Day 27
       note:  "A really busy day and this was not on the top of my mind."
+    "2026-09-28":
+      title: Day 28
+      note: 
+    "2026-09-29":
+      title: Day 29
+      note: I'm sick and craving companionship. Someone to look after me. Someone to cuddle with.
+    "2026-09-30":
+      title: Day 30 
+      note: I continue to fight the urge to cuddle someone. I just want to feel safe and recover.
+    "2026-10-01":
+      title: Day 31
+      note: I've been strong and resisted my desire to invite someone around just to look after me. Instead opting to just accept I will be alone throughout this sickness.
+    "2026-10-02":
+      title: Day 32
+      note: I'm feeling better today, more proactive and positive.
+    "2026-10-03":
+      title: Day 33
+      note: A busy day with friends and little time to even think about this.
+    "2026-10-04":
+      title: Day 34
+      note: Today's focus was on exercise. I did a 30km run, church, and recovery.
+    "2026-10-05":
+      title: Day 35
+      note: My urges are very infrequent and random. They don't come every day and if they do they are gone quickly. They are almost always triggered by something visual, like an instagram photo or a beautiful person.
 ---
 

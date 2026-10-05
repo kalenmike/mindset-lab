@@ -57,4 +57,38 @@ calendar:
       label: X
       title: Day 11 - Missed it Again
       note: I had a full day out hiking, then came home just in time to eat before a 15km race. So now time to get this done today.
+    "2026-09-27":
+      label: X
+      title: Day 12
+      note: Full recovery day so I skipped the yoga.
+    "2026-09-28":
+      title: Day 13
+      note: A good meditation and yoga session, more on the relaxed side.
+    "2026-09-29":
+      label: X
+      title: Day 14
+      note: I'm sick, no yoga today.
+    "2026-09-30":
+      label: X
+      title: Day 15 
+      note: Still sick, skipped.
+    "2026-10-01":
+      label: X
+      title: Day 16 
+      note: Ok, I'm skipping alot. But I am still sick, the worst day so far.
+    "2026-10-02":
+      title: Day 17 
+      note: Feeling better back at it. More meditation focus than yoga but I got it done.
+    "2026-10-03":
+      label: X
+      title: Day 18
+      note: I'm sick again, or just didn't recover. Not sure, but no yoga.
+    "2026-10-04":
+      label: X
+      title: Day 19
+      note: Feeling a little better, yoga would be possible, but this recovery is taking it out of me. Plus I ran 30km today. No yoga.
+    "2026-10-05":
+      label: X
+      title: Day 20
+      note: I did a sauna & ice bath today. Hopefully to help my muscles, but I still feel a little weak.
 ---
