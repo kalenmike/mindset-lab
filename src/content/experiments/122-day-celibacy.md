@@ -116,7 +116,7 @@ calendar:
       note:  "A really busy day and this was not on the top of my mind."
     "2026-09-28":
       title: Day 28
-      note: 
+      note: Not much to add today.
     "2026-09-29":
       title: Day 29
       note: I'm sick and craving companionship. Someone to look after me. Someone to cuddle with.
